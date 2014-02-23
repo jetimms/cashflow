@@ -55,3 +55,5 @@ SOURCES = \
   main.cpp
 RESOURCES = \
   cashflow.qrc
+
+win32:RC_FILE += cashflow.rc

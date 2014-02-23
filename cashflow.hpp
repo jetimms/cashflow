@@ -23,9 +23,9 @@
 	const QString ABOUT_NAME_AND_VERSION =
 		"<h1>cashflow v" + VERSION + "</h1>";
   const QString ABOUT_COPYRIGHT_TEXT =
-		"<p>Copyright &copy; 2014 Jason Eric Timms";
+		"<p>Copyright &copy; 2014 Jason Eric Timms</p>";
   const QString ABOUT_APP_DESCRIPTION =
-    "<p>cashflow is a zero-sum budget program.";
+    "<p>cashflow is a zero-sum budget program.</p>";
   
   #ifndef ATLINE
     #define ATLINE QString(__FILE__) + "(" + QString("%1").arg(__LINE__) + ")"

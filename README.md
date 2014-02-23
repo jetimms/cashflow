@@ -1,78 +1,82 @@
-Version 0.23 20140219_000615
+cashflow
+========
+Zero-sum budgeting tool for the desktop
 
-Quick how-to:
+Version 0.23 20140223_1304
+
+Quick how-to
+------------
   F2 edits!
 
-  Step 1) add a period and edit the name
-  Step 2) register previously unregistered items to fill in. In flows are income (positive to the balance) and out flows are expenses (negative to the balance)
-  Step 3) edit the registered item's note, budget or actual fields
-  Step 4) repeat Steps 2 and 3 until you balance the period budget and actuals to zero (ie. Ins = Outs).
+  Steps:
+    1. add a period and edit the name
+    2. register previously unregistered items to fill in. In flows are income (positive to the balance) and out flows are expenses (negative to the balance)
+    3. edit the registered item's note, budget or actual fields
+    4. repeat Steps 2 and 3 until you balance the period budget and actuals to zero (ie. Ins = Outs).
 
   This version is in old UI application style, menu based. Its mainly written with keyboard enthusiasts in mind, so no context menus either (not that those are new.) You can click on fields to edit them, although only the intended ones will allow editing.
 
   The register shows the metrics, or live data, the budget and actuals. Press F2 to edit registered budget or actual amounts or to alter or enter a new value for periods in the period docked window.
 
-Special Thanks:
-  Qt Project
+Special Thanks
+--------------
+  [Qt Project](http://qt-project.org/)
   http://qt-project.org/
+  
+  [Sqlite](https://sqlite.org/)
+  https://sqlite.org/
 
-  greenpit.com
+  [greenpit.com](http://www.greepit.com/open-source-icons-gcons/)
   http://www.greepit.com/open-source-icons-gcons/
 
-What works:
-  The metrics are showing through the views, also creating the difference column.
+Build Dependencies
+------------------
+Qt 4.7.3 or later stable version of Qt 4
+Sqlite version 3
 
-  The seperate views read the register data and populate themselves based on the period that it contains. As the different views are selected, it filters the next level down. The filter control pattern goes:
-    Period ----------------------> Register
-       |                              ^
-       v---> Flow -> Category -> Item |
-
-  The categorys' names and flows can be changed, added and deleted. The items' names and categories can be changed, added and deleted.
-
-  Items can be registered and unregistered for each period, depending on whether you want to use it for that period, or not.
-
-Usage:
+Usage
+-----
   The period metrics window shows the balances (in minus out) for budgeted and actual spent amounts, plus a diff of those two. These should always sum to zero to follow a zero-sum budget.
 
   Why, you ask?
   
   Alert! Nerdy explanation pending!
   
-  void ZeroBasedBudgettingPhilosophyExplanation()
-  {
-    bool blahBlahBlah_YouKnowThisAlready = improbableAccurateBrainScan(you);
-
-    // skip this block if you know this concept already or once you understand //   (or if you find it corny)
-    while (blahBlahBlah_YouKnowThisAlready == false) {
-
-      In most cases having zero money is worse than having some money, but better than owing money (much better.)
-
-      In this case having zero is a very good thing! I put this comment on its own line because this point is so important. Oh, whoops, no I didn't ...
-
-      In this case having zero is a very good thing!
-
-      (There, now that's better.)
-
-      The reason having a zero-sum is good is because any difference in your income and expenses shows you either are spending more than you are taking in (a mathmatical impossibility) or you are holding back income for that rainy-day shopping spree. Neither are necessary. Giving every penny of income and expense a name will free you to direct the flow of you cash (in and out.) So if you want to spend that extra income on a no-holds barred shopping bananza, then just do it, but record that money as an out for Category "Personal" and Item "Shopping Spree" or more likely "Health" and "Therapy" and make sure you have the income to support it.
-
-      At least, this way you will know what's left over to put towards rent, date-night or the other important things in life.
-
-      (No one is judging you ... or this program won't anyway. Not until I get that Neural-network AI Spending-Nanny feature working :)
-
-      A zero-sum budget is made to assist meeting your financial goals (or the financial portions of your goals.) When you save for something, that will fall under "Outflow" and "Savings" and an item naming the reason. When you spend some of that savings, it will come from "Inflow" and "Savings" from a similarly named item as what you saved to.
-      
-      Pick a primary savings goal per period (month, year, etc.) All of your excess after needs and wants can go towards that savings goal.
-      
-      That way, if you overspend, it will come directly to your attention because you will have to take it out of the money you intended for your primary savings goal. Those occurances will teach you to be more disciplined.
-      
-      One last thing. A budget isn't for accounting or keeping track of your account balances. Use other personal finance tools for that.
-      
-      // to make sure you get the point even if you disagree, do a web-search
-      // for "zero based sum budget how to" to learn more
-
-      blahBlahBlah_YouKnowThisAlready = improbableAccurateBrainScan(you);
-    }
-  }
+      void ZeroBasedBudgettingPhilosophyExplanation()
+      {
+        bool blahBlahBlah_YouKnowThisAlready = improbableAccurateBrainScan(you);
+    
+        // skip this block if you know this concept already or once you understand //   (or if you find it corny)
+        while (blahBlahBlah_YouKnowThisAlready == false) {
+    
+          In most cases having zero money is worse than having some money, but better than owing money (much better.)
+    
+          In this case having zero is a very good thing! I put this comment on its own line because this point is so important. Oh, whoops, no I didn't ...
+    
+          In this case having zero is a very good thing!
+    
+          (There, now that's better.)
+    
+          The reason having a zero-sum is good is because any difference in your income and expenses shows you either are spending more than you are taking in (a mathmatical impossibility) or you are holding back income for that rainy-day shopping spree. Neither are necessary. Giving every penny of income and expense a name will free you to direct the flow of you cash (in and out.) So if you want to spend that extra income on a no-holds barred shopping bananza, then just do it, but record that money as an out for Category "Personal" and Item "Shopping Spree" or more likely "Health" and "Therapy" and make sure you have the income to support it.
+    
+          At least, this way you will know what's left over to put towards rent, date-night or the other important things in life.
+    
+          (No one is judging you ... or this program won't anyway. Not until I get that Neural-network AI Spending-Nanny feature working :)
+    
+          A zero-sum budget is made to assist meeting your financial goals (or the financial portions of your goals.) When you save for something, that will fall under "Outflow" and "Savings" and an item naming the reason. When you spend some of that savings, it will come from "Inflow" and "Savings" from a similarly named item as what you saved to.
+          
+          Pick a primary savings goal per period (month, year, etc.) All of your excess after needs and wants can go towards that savings goal.
+          
+          That way, if you overspend, it will come directly to your attention because you will have to take it out of the money you intended for your primary savings goal. Those occurances will teach you to be more disciplined.
+          
+          One last thing. A budget isn't for accounting or keeping track of your account balances. Use other personal finance tools for that.
+          
+          // to make sure you get the point even if you disagree, do a web-search
+          // for "zero based sum budget how to" to learn more
+    
+          blahBlahBlah_YouKnowThisAlready = improbableAccurateBrainScan(you);
+        }
+      }
 
   With zero-sum budgeting, you will eventually set budget and actual for each item to what you actually spent on that item. In other words, budget is never less than actual and should be equal once the period has expired and all budgetted money for each item is spent. (The difference value should show zero, when the period is up.)
 
@@ -98,7 +102,21 @@ Usage:
 
   Press F2 to edit either the budget and actual metrics in the register window. Only the budget and actual can be edited. The difference column auto updates with the formula (budget - actual).
 
-What's broken in this version:
+What works
+----------
+  The metrics are showing through the views, also creating the difference column.
+
+  The seperate views read the register data and populate themselves based on the period that it contains. As the different views are selected, it filters the next level down. The filter control pattern goes:
+    Period ----------------------> Register
+       |                              ^
+       v---> Flow -> Category -> Item |
+
+  The categorys' names and flows can be changed, added and deleted. The items' names and categories can be changed, added and deleted.
+
+  Items can be registered and unregistered for each period, depending on whether you want to use it for that period, or not.
+
+What's broken in this version
+-----------------------------
   Saved files loose their undo-redo focus and look as if they are "redone" all the way. When saving a file, it should remove the extra redos.
 
   BadWindow error is occuring again. Its likely the progress bar is overflowing.
@@ -114,7 +132,8 @@ What's broken in this version:
     Resource id:  0x1c1daa0
   <<<
 
-What's left to do:
+What's left to do
+-----------------
   Find another key other than F2 for edit, such as Enter.
 
   Allow customizing of styles and colors.
@@ -153,7 +172,13 @@ What's left to do:
 
   Move to Qt 5
 
-What's done:
+What's done
+-----------
+  [Done in v0.23 on 20140223]
+  Reconfigured this file in Markdown format.
+  
+  Added changes for staging to github.
+
   [Done/Fixed in v0.23 on 20140219]
   Added the png files to the repository and their qrc resource file. I added the qrc_*.cpp file to the Hg ignore file.
   
