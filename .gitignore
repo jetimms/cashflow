@@ -1,0 +1,26 @@
+# JETimms 20140220_2255
+# This .gitignore file will allow the Git repository to ignore files 
+# matching the following file patterns.
+
+# build files created by Visual Studio
+*.ncb
+vc*.idb
+vc*.pdb
+
+# debug and release folders by Visual Studio
+debug
+release
+
+# make files and object files
+Makefile*
+*.o
+
+# Qt moc_ files
+moc_*.cpp
+moc_*.hpp
+
+# the project executable
+cashflow
+
+# compiled Qt qrc_.cpp file
+qrc_*.cpp
