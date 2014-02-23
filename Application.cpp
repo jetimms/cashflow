@@ -272,7 +272,7 @@ bool Application::getDataModified() const {
 }
 
 void Application::setDataModified(bool isDataModified) {
-  setDataModified(isDataModified);
+  data.setDataModified(isDataModified);
 }
 
 void Application::clonePeriodAs(QString sourcePeriodId, QString periodId) {
