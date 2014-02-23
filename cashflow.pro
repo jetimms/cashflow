@@ -15,8 +15,15 @@
 # cashflow.pro
 #   Qt 4 project file
 
-CONFIG += uitools debug console
-CONFIG -= release
+CONFIG += uitools console
+
+release: DESTDIR = build/release
+debug:   DESTDIR = build/debug
+
+OBJECTS_DIR = $$DESTDIR/.obj
+MOC_DIR = $$DESTDIR/.moc
+RCC_DIR = $$DESTDIR/.qrc
+UI_DIR = $$DESTDIR/.ui
 
 TEMPLATE = app
 TARGET = cashflow

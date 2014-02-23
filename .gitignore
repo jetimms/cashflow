@@ -7,9 +7,8 @@
 vc*.idb
 vc*.pdb
 
-# debug and release folders by Visual Studio
-debug
-release
+# build debug and release folders
+build
 
 # make files and object files
 Makefile*
@@ -24,3 +23,6 @@ cashflow
 
 # compiled Qt qrc_.cpp file
 qrc_*.cpp
+
+# distribution folders
+distribute
