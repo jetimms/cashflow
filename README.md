@@ -57,7 +57,7 @@ Usage
     
           (There, now that's better.)
     
-          The reason having a zero-sum is good is because any difference in your income and expenses shows you either are spending more than you are taking in (a mathmatical impossibility) or you are holding back income for that rainy-day shopping spree. Neither are necessary. Giving every penny of income and expense a name will free you to direct the flow of you cash (in and out.) So if you want to spend that extra income on a no-holds barred shopping bananza, then just do it, but record that money as an out for Category "Personal" and Item "Shopping Spree" or more likely "Health" and "Therapy" and make sure you have the income to support it.
+          The reason having a zero-sum is good is because any difference in your income and expenses shows you either are spending more than you are taking in (a mathmatical impossibility) or you are holding back income for that rainy-day shopping spree. Neither are necessary. Giving every penny of income and expense a name will free you to direct the flow of your cash (in and out.) So if you want to spend that extra income on a no-holds barred shopping bonanza, then just do it, but record that money as an out for Category "Personal" and Item "Shopping Spree" or more likely "Health" and "Therapy" and make sure you have the income to support it.
     
           At least, this way you will know what's left over to put towards rent, date-night or the other important things in life.
     
