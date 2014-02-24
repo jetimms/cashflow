@@ -9,10 +9,10 @@ Quick how-to
   F2 edits!
 
   Steps:
-    1. add a period and edit the name
-    2. register previously unregistered items to fill in. In flows are income (positive to the balance) and out flows are expenses (negative to the balance)
-    3. edit the registered item's note, budget or actual fields
-    4. repeat Steps 2 and 3 until you balance the period budget and actuals to zero (ie. Ins = Outs).
+  1. add a period and edit the name
+  2. register previously unregistered items to fill in. In flows are income (positive to the balance) and out flows are expenses (negative to the balance)
+  3. edit the registered item's note, budget or actual fields
+  4. repeat Steps 2 and 3 until you balance the period budget and actuals to zero (ie. Ins = Outs).
 
   This version is in old UI application style, menu based. Its mainly written with keyboard enthusiasts in mind, so no context menus either (not that those are new.) You can click on fields to edit them, although only the intended ones will allow editing.
 
