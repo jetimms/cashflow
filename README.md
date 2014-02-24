@@ -21,13 +21,8 @@ Quick how-to
 Special Thanks
 --------------
   [Qt Project](http://qt-project.org/)
-  http://qt-project.org/
-  
   [Sqlite](https://sqlite.org/)
-  https://sqlite.org/
-
   [greenpit.com](http://www.greepit.com/open-source-icons-gcons/)
-  http://www.greepit.com/open-source-icons-gcons/
 
 Build Dependencies
 ------------------
@@ -42,43 +37,73 @@ Usage
   
   Alert! Nerdy explanation pending!
   
-      void ZeroBasedBudgettingPhilosophyExplanation()
-      {
-        bool blahBlahBlah_YouKnowThisAlready = improbableAccurateBrainScan(you);
-    
-        // skip this block if you know this concept already or once you understand //   (or if you find it corny)
-        while (blahBlahBlah_YouKnowThisAlready == false) {
-    
-          In most cases having zero money is worse than having some money, but better than owing money (much better.)
-    
-          In this case having zero is a very good thing! I put this comment on its own line because this point is so important. Oh, whoops, no I didn't ...
-    
-          In this case having zero is a very good thing!
-    
-          (There, now that's better.)
-    
-          The reason having a zero-sum is good is because any difference in your income and expenses shows you either are spending more than you are taking in (a mathmatical impossibility) or you are holding back income for that rainy-day shopping spree. Neither are necessary. Giving every penny of income and expense a name will free you to direct the flow of your cash (in and out.) So if you want to spend that extra income on a no-holds barred shopping bonanza, then just do it, but record that money as an out for Category "Personal" and Item "Shopping Spree" or more likely "Health" and "Therapy" and make sure you have the income to support it.
-    
-          At least, this way you will know what's left over to put towards rent, date-night or the other important things in life.
-    
-          (No one is judging you ... or this program won't anyway. Not until I get that Neural-network AI Spending-Nanny feature working :)
-    
-          A zero-sum budget is made to assist meeting your financial goals (or the financial portions of your goals.) When you save for something, that will fall under "Outflow" and "Savings" and an item naming the reason. When you spend some of that savings, it will come from "Inflow" and "Savings" from a similarly named item as what you saved to.
-          
-          Pick a primary savings goal per period (month, year, etc.) All of your excess after needs and wants can go towards that savings goal.
-          
-          That way, if you overspend, it will come directly to your attention because you will have to take it out of the money you intended for your primary savings goal. Those occurances will teach you to be more disciplined.
-          
-          One last thing. A budget isn't for accounting or keeping track of your account balances. Use other personal finance tools for that.
-          
-          // to make sure you get the point even if you disagree, do a web-search
-          // for "zero based sum budget how to" to learn more
-    
-          blahBlahBlah_YouKnowThisAlready = improbableAccurateBrainScan(you);
-        }
-      }
+```c++
+void ZeroBasedBudgettingPhilosophyExplanation()
+{
+  bool blahBlahBlah_IKnowThisAlready = brainScan(you);
 
-  With zero-sum budgeting, you will eventually set budget and actual for each item to what you actually spent on that item. In other words, budget is never less than actual and should be equal once the period has expired and all budgetted money for each item is spent. (The difference value should show zero, when the period is up.)
+  // skip this if you know this concept already or 
+  // (or if you find it corny)
+
+  while (blahBlahBlah_IKnowThisAlready == false) {
+
+    In most cases having zero money is worse than having some money, but 
+    better than owing money (much better.)
+
+    In this case having zero is a very good thing! I put this comment on 
+    its own line because this point is so important. Oh, whoops, no I 
+    didn't ...
+
+    In this case having zero is a very good thing!
+
+    (There, now that's better.)
+
+    The reason having a zero-sum is good is because any difference in your 
+    income and expenses shows you either are spending more than you are 
+    taking in (a mathmatical impossibility) or you are holding back income 
+    for that rainy-day shopping spree. Neither are necessary. Giving every 
+    penny of income and expense a name will free you to direct the flow of 
+    your cash (in and out.) So if you want to spend that extra income on a 
+    no-holds barred shopping bonanza, then just do it, but record that 
+    money as an out for Category "Personal" and Item "Shopping Spree" or 
+    more likely "Health" and "Therapy" and make sure you have the income to 
+    support it.
+
+    At least, this way you will know what's left over to put towards rent, 
+    date-night or the other important things in life.
+
+    (No one is judging you ... or this program won't anyway. Not until I 
+    get that Neural-network AI Spending-Nanny feature working :)
+
+    A zero-sum budget is made to assist meeting your financial goals (or 
+    the financial portions of your goals.) When you save for something, 
+    that will fall under "Outflow" and "Savings" and an item naming the 
+    reason. When you spend some of that savings, it will come from "Inflow" 
+    and "Savings" from a similarly named item as what you saved to.
+    
+    Pick a primary savings goal per period (month, year, etc.) All of your 
+    excess after needs and wants can go towards that savings goal.
+    
+    That way, if you overspend, it will come directly to your attention 
+    because you will have to take it out of the money you intended for your 
+    primary savings goal. Those occurances will teach you to be more 
+    disciplined.
+    
+    With zero-sum budgeting, you will eventually set the budget and actual for 
+    each item to what you actually spent on that item. In other words, budget
+    is never less than actual and should be equal once the period has expired 
+    and all budgetted money for each item is spent. (The difference value 
+    should show zero, when the period is up.)
+
+    One last thing. A budget isn't for accounting or keeping track of your 
+    account balances. Use other personal finance tools for that.
+    
+    // do an internet search for "zero sum budget how to" to learn more
+
+    blahBlahBlah_IKnowThisAlready = brainScan(you);
+  }
+}
+```
 
   The selecting a period will show the metrics of that period inside the flow metrics window, if any.
 
