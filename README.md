@@ -21,8 +21,13 @@ Quick how-to
 Special Thanks
 --------------
   [Qt Project](http://qt-project.org/)
+  http://qt-project.org/
+  
   [Sqlite](https://sqlite.org/)
+  https://sqlite.org/
+
   [greenpit.com](http://www.greepit.com/open-source-icons-gcons/)
+  http://www.greepit.com/open-source-icons-gcons/
 
 Build Dependencies
 ------------------
@@ -40,12 +45,12 @@ Usage
 ```c++
 void ZeroBasedBudgettingPhilosophyExplanation()
 {
-  bool blahBlahBlah_IKnowThisAlready = brainScan(you);
+  bool blahBlahBlah_YouKnowThisAlready = improbableAccurateBrainScan(you);
 
   // skip this if you know this concept already or 
   // (or if you find it corny)
 
-  while (blahBlahBlah_IKnowThisAlready == false) {
+  while (blahBlahBlah_YouKnowThisAlready == false) {
 
     In most cases having zero money is worse than having some money, but 
     better than owing money (much better.)
@@ -89,18 +94,18 @@ void ZeroBasedBudgettingPhilosophyExplanation()
     primary savings goal. Those occurances will teach you to be more 
     disciplined.
     
-    With zero-sum budgeting, you will eventually set the budget and actual for 
-    each item to what you actually spent on that item. In other words, budget
-    is never less than actual and should be equal once the period has expired 
-    and all budgetted money for each item is spent. (The difference value 
-    should show zero, when the period is up.)
-
     One last thing. A budget isn't for accounting or keeping track of your 
     account balances. Use other personal finance tools for that.
-    
-    // do an internet search for "zero sum budget how to" to learn more
 
-    blahBlahBlah_IKnowThisAlready = brainScan(you);
+    With zero-sum budgeting, you will eventually set the budget and actual 
+    each item to what you actually spent on that item. In other words, for 
+    budget is never less than actual and should be equal once the period 
+    has expired and all budgetted money for each item is spent. (The 
+    difference value should show zero, when the period is up.)
+    
+    // do a internet search for "zero sum budget how to" to learn more
+
+    blahBlahBlah_YouKnowThisAlready = improbableAccurateBrainScan(you);
   }
 }
 ```
