@@ -9,6 +9,7 @@ Quick how-to
 F2 edits!
 
 Steps:
+
 1. add a period and edit the name
 2. register previously unregistered items to fill in. In flows are income (positive to the balance) and out flows are expenses (negative to the balance)
 3. edit the registered item's note, budget or actual fields
@@ -21,11 +22,9 @@ The register shows the metrics, or live data, the budget and actuals. Press F2 t
 
 Special Thanks
 --------------
-*[Qt Project](http://qt-project.org/)
-  
-*[Sqlite](https://sqlite.org/)
-
-*[greenpit.com](http://www.greepit.com/open-source-icons-gcons/)
+* [Qt Project](http://qt-project.org/)
+* [Sqlite](https://sqlite.org/)
+* [greenpit.com](http://www.greepit.com/open-source-icons-gcons/)
 
 Build Dependencies
 ------------------
