@@ -199,21 +199,22 @@ QStringList Application::getRecentFiles() const {
 
 void Application::resetForm() {
   form.reset(new MainForm());
-	form->resize(500, 600);
 	form->setWindowIcon(QIcon(":/images/icon.png"));
 	form->show();
 }
 
 void Application::writeSettings() const {
-  QSettings settings;
-  settings.beginGroup("Application");
+  QSettings settings("cashflow", "cashflow");
+
+  settings.beginGroup("RecentFiles");
   settings.setValue("recentFiles", recentFiles);
   settings.endGroup();
 }
 
 void Application::readSettings() {
-  QSettings settings;
-  settings.beginGroup("Application");
+  QSettings settings("cashflow", "cashflow");
+
+  settings.beginGroup("RecentFiles");
   recentFiles = settings.value("recentFiles").toStringList();
   settings.endGroup();
 }

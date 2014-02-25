@@ -2,7 +2,7 @@ cashflow
 ========
 Zero-sum budgeting tool for the desktop
 
-Version 0.23.1
+Version 0.24.0
 
 Quick how-to
 ------------
@@ -206,6 +206,13 @@ Move to Qt 5
 
 What's done
 -----------
+[Done in v0.24.0 on 20140225]
+Fixed the settings to save to a cashflow folder in %APPDATA%, $HOME/.config/, or $HOME/Libarary/Preferences/ folders on Windows, Linux or Mac.
+
+Set the sizing and position to be saved when the user changes it.
+
+Removed default sizing from Application class and set it in MainForm class. Set default main form size to be 640 by 480.
+
 [Done in v0.23 on 20140223]
 Reconfigured this file in Markdown format.
 

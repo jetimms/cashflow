@@ -89,6 +89,9 @@ MainForm::MainForm()
   categoryViewHorizontalHeaderSortOrder = Qt::AscendingOrder;
   registerViewHorizontalHeaderSortOrder = Qt::AscendingOrder;
   unusedViewHorizontalHeaderSortOrder = Qt::AscendingOrder;
+
+
+  readSettings();
 }
 
 void MainForm::setupBlank() {
@@ -1853,4 +1856,27 @@ void MainForm::resetMappingChanged() {
 
 bool MainForm::getMappingChanged() const {
   return mappingChanged;
+}
+
+void MainForm::writeSettings() const {
+  QSettings settings("cashflow", "cashflow");
+
+  settings.beginGroup("MainForm");
+  settings.setValue("size", size());
+  settings.setValue("pos", pos());
+  settings.endGroup();
+}
+
+void MainForm::readSettings() {
+  QSettings settings("cashflow", "cashflow");
+
+  settings.beginGroup("MainForm");
+  resize(settings.value("size", QSize(640, 480)).toSize());
+  move(settings.value("pos", QPoint(200, 200)).toPoint());
+  settings.endGroup();
+}
+
+void MainForm::closeEvent(QCloseEvent *event) {
+  writeSettings();
+  event->accept();
 }

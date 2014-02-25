@@ -165,6 +165,11 @@
     void resetMappingChanged();
     bool getMappingChanged() const;
 
+    void writeSettings() const;
+    void readSettings();
+
+    void closeEvent(QCloseEvent *event);
+
     SqlTableModel *periodModel;
     SqlTableModel *flowModel;
     SqlTableModel *categoryModel;
