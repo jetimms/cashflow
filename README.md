@@ -6,7 +6,7 @@ Version 0.23.1
 
 Quick how-to
 ------------
-F2 edits!
+F2 edits! Enter saves!
 
 Steps:
 
