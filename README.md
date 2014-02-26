@@ -93,10 +93,10 @@ void ZeroBasedBudgettingPhilosophyExplanation()
     disciplined.
     
     With zero-sum budgeting, you will eventually set the budget and actual 
-    each item to what you actually spent on that item. In other words, for 
-    budget is never less than actual and should be equal once the period 
-    has expired and all budgetted money for each item is spent. (The 
-    difference value should show zero, when the period is up.)
+    each item to what you actually spent on that item. In other words, your 
+    budget is never less than your actual and should be equal once the period 
+    has expired, that is once all budgetted money for each item is "actually" 
+    spent. The difference of these two should be zero, when the period is up.
     
     One last thing. A budget isn't for accounting or keeping track of your 
     account balances. Use other personal finance tools for that.
