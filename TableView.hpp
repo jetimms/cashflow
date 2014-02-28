@@ -32,7 +32,29 @@
       resizeColumnsToContents();
       return QTableView::viewportEvent(event);
     }
+
+  private:
+    void keyPressEvent(QKeyEvent *event) {
+      switch (event->key()) {
+      case Qt::Key_Space:
+        // pass through
+      case Qt::Key_Select:
+        // pass through
+      case Qt::Key_F2:
+        // pass through
+      case Qt::Key_Enter:
+        // pass through
+      case Qt::Key_Return:
+        // pass through
+      case Qt::Key_Insert:
+        if (!edit(currentIndex(), EditKeyPressed, event))
+          event->ignore();
+        break;
+      default:
+        QAbstractItemView::keyPressEvent(event);
+        break;
+      }
+    }
   };
 
 #endif // _TABLEVIEW_HPP_
-

@@ -2,7 +2,7 @@ cashflow
 ========
 Zero-sum budgeting tool for the desktop
 
-Version 0.24.0
+Version 0.25.0
 
 Quick how-to
 ------------
@@ -166,8 +166,6 @@ X Error: BadWindow (invalid Window parameter) 3
 
 What's left to do
 -----------------
-Find another key other than F2 for edit, such as Enter.
-
 Allow customizing of styles and colors.
 
 Allow saving of preferences on close.
@@ -206,6 +204,10 @@ Move to Qt 5
 
 What's done
 -----------
+[Done in v0.25.0 on 20140227]
+Find another key other than F2 for edit, such as Enter.
+  In addition to F2, I added Enter, Insert, Return, Select, and Spacebar to the list of keys to open the editor.
+
 [Done in v0.24.0 on 20140225]
 Fixed the settings to save to a cashflow folder in %APPDATA%, $HOME/.config/, or $HOME/Libarary/Preferences/ folders on Windows, Linux or Mac.
 
