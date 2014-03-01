@@ -2,7 +2,7 @@ cashflow
 ========
 Zero-sum budgeting tool for the desktop
 
-Version 0.25.0
+Version 0.25.1
 
 Quick how-to
 ------------
@@ -204,6 +204,10 @@ Move to Qt 5
 
 What's done
 -----------
+[Fixed in v0.25.1 on 20140301]
+Remove console window in Windows.
+  I added "CONFIG -= console" when the qmake is ran with the release config flag.
+
 [Done in v0.25.0 on 20140227]
 Find another key other than F2 for edit, such as Enter.
   In addition to F2, I added Enter, Insert, Return, Select, and Spacebar to the list of keys to open the editor.
