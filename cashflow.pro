@@ -17,14 +17,14 @@
 
 CONFIG += uitools
 
-release: {
-  CONFIG -= console
-  DESTDIR = build/release
-}
-
-debug: {
+CONFIG(debug, debug|release) {
   CONFIG += console
   DESTDIR = build/debug
+}
+
+CONFIG(release, debug|release) {
+  CONFIG -= console
+  DESTDIR = build/release
 }
 
 OBJECTS_DIR = $$DESTDIR/.obj
