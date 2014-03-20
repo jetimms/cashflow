@@ -18,6 +18,9 @@ Makefile*
 moc_*.cpp
 moc_*.hpp
 
+# Qt Creator user settings
+cashflow.pro.user
+
 # the project executable
 cashflow
 
