@@ -2131,7 +2131,7 @@ bool Data::save() {
     isRunningOkay = saveAs();
   } else {
     // save the current file
-    isRunningOkay = saveFile(savedFileName, QString(tr("Save")));
+    isRunningOkay = saveFile(savedFileName);
   }
 
   return isRunningOkay;
@@ -2148,7 +2148,7 @@ bool Data::saveAs() {
       , QDir::homePath() + QDir::toNativeSeparators("/untitled.cashflow")
       , tr("SQLite Database files (*.db *.dat *.cashflow)"));
 
-  isRunningOkay = saveFile(newFileName, "Save As");
+  isRunningOkay = saveFile(newFileName);
 
   if (isRunningOkay) {
     // if the saved work, store the last saved file name
@@ -2170,12 +2170,12 @@ bool Data::backupAs() {
       , tr("SQLite Database files (*.db *.dat *.cashflow)"));
 
   // attempt a file save operation
-  isRunningOkay = saveFile(newFileName, "Clone As");
+  isRunningOkay = saveFile(newFileName);
 
   return isRunningOkay;
 }
 
-bool Data::saveFile(QString saveFileName, QString actionName) {
+bool Data::saveFile(QString saveFileName) {
   bool isRunningOkay = true;
 
   // clean up old, unused space in database
@@ -2215,13 +2215,6 @@ bool Data::saveFile(QString saveFileName, QString actionName) {
   }
 
   if (!isRunningOkay) {
-//    QMessageBox::warning(
-//			(QWidget *)0
-//      , QObject::tr("Error: ") + actionName + QObject::tr(" failed.")
-//      , QObject::tr("Error: The ")
-//        + actionName
-//        + QObject::tr(" action failed to occur."));
-
     isRunningOkay = false;
   }
 

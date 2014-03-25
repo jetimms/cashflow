@@ -1,11 +1,11 @@
 //  Copyright 2014 Jason Eric Timms
-// 
+//
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
 //    You may obtain a copy of the License at
-// 
+//
 //      http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 //    Unless required by applicable law or agreed to in writing, software
 //    distributed under the License is distributed on an "AS IS" BASIS,
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,11 +19,11 @@
 #include <QtSql>
 #include <QDebug>
 
+#include "MainForm.hpp"
 #include "Application.hpp"
 #include "cashflow.hpp"
 #include "ManageCategoriesForm.hpp"
 #include "ManageItemsForm.hpp"
-#include "MainForm.hpp"
 #include "DecimalFieldItemDelegate.hpp"
 #include "SqlTableModel.hpp"
 #include "TableView.hpp"
@@ -38,12 +38,12 @@ static const QString modifiedFileIndicator = "[*]";
 static const QString titleFileSeperator = " - ";
 
 MainForm::MainForm()
-  	: periodModel((SqlTableModel *)0)
+    : periodModel((SqlTableModel *)0)
     , flowModel((SqlTableModel *)0)
     , categoryModel((SqlTableModel *)0)
     , registerModel((SqlTableModel *)0)
     , unusedModel((QSqlRelationalTableModel *)0)
-  	, periodView((TableView *)0)
+    , periodView((TableView *)0)
     , flowView((TableView *)0)
     , categoryView((TableView *)0)
     , registerView((TableView *)0)
@@ -64,14 +64,20 @@ MainForm::MainForm()
     , editMenu((QMenu *)0)
     , viewMenu((QMenu *)0)
     , helpMenu((QMenu *)0)
+    , emptyGroupBox((QGroupBox *)0)
+    , newButton((QPushButton *)0)
+    , openButton((QPushButton *)0)
+    , exitButton((QPushButton *)0)
+    , emptyButtonBox((QDialogButtonBox *)0)
     , mappingChanged(false) {
-  createActions();
-  setupBlank();
 
-	// if opened file, load recent list
-	if (!qApp->savedDatabaseName().isEmpty()) {
-		addCurrentFileToRecentList();
-	} else {
+  createActions();
+  setupEmpty();
+
+  // if opened file, load recent list
+  if (!qApp->savedDatabaseName().isEmpty()) {
+    addCurrentFileToRecentList();
+  } else {
     // fill the recent file list from prior session
     updateRecentFileActions();
   }
@@ -83,23 +89,29 @@ MainForm::MainForm()
 
   // set initial title bar text
   displayDefaultTitle();
-  
+
   periodViewHorizontalHeaderSortOrder = Qt::AscendingOrder;
   flowViewHorizontalHeaderSortOrder = Qt::AscendingOrder;
   categoryViewHorizontalHeaderSortOrder = Qt::AscendingOrder;
   registerViewHorizontalHeaderSortOrder = Qt::AscendingOrder;
   unusedViewHorizontalHeaderSortOrder = Qt::AscendingOrder;
-
-
-  readSettings();
 }
 
-void MainForm::setupBlank() {
-  createBlankMenus();
+void MainForm::setupEmpty() {
+  createEmptyMenus();
   setCentralWidget(new QWidget());
+
+  QSize initialSize = QSize(INITIAL_WIDTH_BLANK, INITIAL_HEIGHT_BLANK);
+  resize(initialSize);
+
+  createEmptyButtons();
+
+  resize(initialSize);
 }
 
 void MainForm::setup() {
+  readSettings();
+
   createMenus();
   createPanels();
   dockSummaryPanels();
@@ -125,14 +137,14 @@ void MainForm::setup() {
     registerModel, SIGNAL(dataSubmitted())
     , this, SLOT(updateViewsAfterChange()));
 
-	// set up connections for updating the titlebar and undo log
-	connect(
-		periodModel, SIGNAL(dataSubmitted())
-		, this, SLOT(showChangedOccured()));
+  // set up connections for updating the titlebar and undo log
+  connect(
+    periodModel, SIGNAL(dataSubmitted())
+    , this, SLOT(showChangedOccured()));
 
-	connect(
-		registerModel, SIGNAL(dataSubmitted())
-		, this, SLOT(showChangedOccured()));
+  connect(
+    registerModel, SIGNAL(dataSubmitted())
+    , this, SLOT(showChangedOccured()));
 
   // allow sorting columns
   periodViewHorizontalHeader = periodView->horizontalHeader();
@@ -183,9 +195,9 @@ void MainForm::setup() {
 }
 
 void MainForm::showChangedOccured() {
-	displayUnsavedTitle();
-	logUndoRedoChange();
-	qApp->setLogUndoRedoIndexToMax();
+  displayUnsavedTitle();
+  logUndoRedoChange();
+  qApp->setLogUndoRedoIndexToMax();
   undoAction->setEnabled(!qApp->logUndoRedoIndexAtZero());
   redoAction->setEnabled(!qApp->logUndoRedoIndexAtMax());
 }
@@ -294,27 +306,27 @@ void MainForm::createFileActions() {
 
   revertAction = new QAction(tr("&Revert"), this);
 //  revertAction->setIcon(QIcon(":/images/revert.png"));
-	revertAction->setStatusTip(tr("Revert to the last save of the current cashflow file"));
+  revertAction->setStatusTip(tr("Revert to the last save of the current cashflow file"));
   connect(revertAction, SIGNAL(triggered()), this, SLOT(revertToSave()));
 
   closeAction = new QAction(tr("&Close"), this);
   closeAction->setShortcut(QKeySequence::Close);
-	closeAction->setStatusTip(tr("Close the current cashflow file"));
+  closeAction->setStatusTip(tr("Close the current cashflow file"));
   connect(closeAction, SIGNAL(triggered()), this, SLOT(closeFile()));
 
   saveAction = new QAction(tr("&Save"), this);
   saveAction->setIcon(QIcon(":/images/save.png"));
   saveAction->setShortcut(QKeySequence::Save);
-	saveAction->setStatusTip(tr("Save the current cashflow file"));
+  saveAction->setStatusTip(tr("Save the current cashflow file"));
   connect(saveAction, SIGNAL(triggered()), this, SLOT(save()));
 
   saveAsAction = new QAction(tr("Save &As..."), this);
   saveAsAction->setShortcut(QKeySequence::SaveAs);
-	saveAsAction->setStatusTip(tr("Save the current cashflow file under a new name and load the new file"));
+  saveAsAction->setStatusTip(tr("Save the current cashflow file under a new name and load the new file"));
   connect(saveAsAction, SIGNAL(triggered()), this, SLOT(saveAs()));
 
   backupAsAction = new QAction(tr("&Backup As..."), this);
-	backupAsAction->setStatusTip(tr("Save the current cashflow file under a new name and keep the original file loaded"));
+  backupAsAction->setStatusTip(tr("Save the current cashflow file under a new name and keep the original file loaded"));
   connect(backupAsAction, SIGNAL(triggered()), this, SLOT(backupAs()));
 
   manageCategoriesAction = new QAction(tr("Manage &Categories..."), this);
@@ -491,9 +503,6 @@ void MainForm::createMenus() {
   propertiesAction->setEnabled(true);
   manageCategoriesAction->setEnabled(true);
   manageItemsAction->setEnabled(true);
-  manageItemsAction->setEnabled(true);
-  manageItemsAction->setEnabled(true);
-  revertAction->setEnabled(false);
 
   fileMenu = menuBar()->addMenu(tr("&File"));
   fileMenu->addAction(newAction);
@@ -546,7 +555,7 @@ void MainForm::createMenus() {
   helpMenu->addAction(aboutQtAction);
 }
 
-void MainForm::createBlankMenus() {
+void MainForm::createEmptyMenus() {
   revertAction->setEnabled(false);
   closeAction->setEnabled(false);
   saveAction->setEnabled(false);
@@ -594,6 +603,53 @@ void MainForm::createBlankMenus() {
   helpMenu->addAction(aboutQtAction);
 }
 
+void MainForm::createEmptyButtons() {
+  newButton = new QPushButton(tr("New"));
+  newButton->setObjectName("newButton");
+  newButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+  openButton = new QPushButton(tr("Open"));
+  openButton->setObjectName("openButton");
+  openButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+  exitButton = new QPushButton(tr("Exit"));
+  exitButton->setObjectName("exitButton");
+  exitButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+  emptyButtonBox = new QDialogButtonBox(Qt::Vertical, (QWidget *)0);
+  emptyButtonBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+  emptyButtonBox->addButton(newButton, QDialogButtonBox::ActionRole);
+  emptyButtonBox->addButton(openButton, QDialogButtonBox::ActionRole);
+  emptyButtonBox->addButton(exitButton, QDialogButtonBox::ActionRole);
+
+  QVBoxLayout *emptyLayout = new QVBoxLayout;
+  emptyLayout->addWidget(emptyButtonBox);
+
+  connect(
+    newButton
+    , SIGNAL(clicked())
+    , this
+    , SLOT(newFile()));
+
+  connect(
+    openButton
+    , SIGNAL(clicked())
+    , this
+    , SLOT(open()));
+
+  connect(
+    exitButton
+    , SIGNAL(clicked())
+    , this
+    , SLOT(exitApplication()));
+
+  emptyGroupBox = new QGroupBox(this);
+  emptyGroupBox->setLayout(emptyLayout);
+
+  setCentralWidget(emptyGroupBox);
+}
+
 void MainForm::newFile() {
   if (okToContinue()) {
     if (qApp->newFile()) {
@@ -613,18 +669,18 @@ void MainForm::newFile() {
 void MainForm::open(QString fileName) {
   if (okToContinue()) {
     if (qApp->open(fileName)) {
-  		deleteFileFormObjects();
-  		setup();
+      deleteFileFormObjects();
+      setup();
       addCurrentFileToRecentList();
-  		updateViewsAfterChange();
-  		periodView->setFocus();
-  		displayDefaultTitle();
+      updateViewsAfterChange();
+      periodView->setFocus();
+      displayDefaultTitle();
 
       revertAction->setEnabled(true);
       undoAction->setEnabled(!qApp->logUndoRedoIndexAtZero());
       redoAction->setEnabled(!qApp->logUndoRedoIndexAtMax());
-  	}
-	}
+    }
+  }
 }
 
 void MainForm::revertToSave() {
@@ -635,7 +691,7 @@ void MainForm::closeFile() {
   if (okToContinue()) {
     qApp->clearSavedDatabaseName();
     deleteFileFormObjects();
-    setupBlank();
+    setupEmpty();
     displayDefaultTitle();
 
     revertAction->setEnabled(false);
@@ -661,26 +717,26 @@ void MainForm::openRecentFile() {
 
 void MainForm::deleteFileFormObjects() {
   if (periodDockWidget) {
-	  periodDockWidget->setParent((QDockWidget *)0);
+    periodDockWidget->setParent((QDockWidget *)0);
     delete periodDockWidget;
     periodDockWidget = (QDockWidget *)0;
   }
 
   if (flowDockWidget) {
-	  flowDockWidget->setParent((QDockWidget *)0);
+    flowDockWidget->setParent((QDockWidget *)0);
     delete flowDockWidget;
     flowDockWidget = (QDockWidget *)0;
   }
 
   if (categoryDockWidget) {
-	  categoryDockWidget->setParent((QDockWidget *)0);
+    categoryDockWidget->setParent((QDockWidget *)0);
     delete categoryDockWidget;
     categoryDockWidget = (QDockWidget *)0;
   }
 
   if (mainGroupBox) {
     setCentralWidget(new QWidget());
-	  mainGroupBox->setParent((QGroupBox *)0);
+    mainGroupBox->setParent((QGroupBox *)0);
     delete mainGroupBox;
     mainGroupBox = (QGroupBox *)0;
   }
@@ -788,16 +844,15 @@ void MainForm::undo() {
   isRunningOkay = qApp->undo();
 
   undoAction->setEnabled(!qApp->logUndoRedoIndexAtZero());
-	redoAction->setEnabled(!qApp->logUndoRedoIndexAtMax());
+  redoAction->setEnabled(!qApp->logUndoRedoIndexAtMax());
 
   if (isRunningOkay) {
-  	updateViewsAfterChange();
-  	
-  	// if unmodified before, set the display to show changes have been made
-  	if (qApp->logUndoRedoIndexAtSaved() == true) {
+    updateViewsAfterChange();
+
+    // if unmodified before, set the display to show changes have been made
+    if (qApp->logUndoRedoIndexAtSaved() == true) {
       displayDefaultTitle();
     } else {
-//      qApp->setDataModified(true);
       displayUnsavedTitle();
     }
   }
@@ -807,18 +862,17 @@ void MainForm::redo() {
   bool isRunningOkay = true;
 
   isRunningOkay = qApp->redo();
-  
-	undoAction->setEnabled(!qApp->logUndoRedoIndexAtZero());
-	redoAction->setEnabled(!qApp->logUndoRedoIndexAtMax());
+
+  undoAction->setEnabled(!qApp->logUndoRedoIndexAtZero());
+  redoAction->setEnabled(!qApp->logUndoRedoIndexAtMax());
 
   if (isRunningOkay) {
-  	updateViewsAfterChange();
+    updateViewsAfterChange();
 
-  	// if unmodified before, set the display to show changes have been made
-  	if (qApp->logUndoRedoIndexAtSaved() == true) {
+    // if unmodified before, set the display to show changes have been made
+    if (qApp->logUndoRedoIndexAtSaved() == true) {
       displayDefaultTitle();
     } else {
-//      qApp->setDataModified(true);
       displayUnsavedTitle();
     }
   }
@@ -862,7 +916,7 @@ void MainForm::clonePeriod() {
   // get the source period's id
   QModelIndex sourcePeriodViewCurrent = periodView->currentIndex();
 
-  QSqlRecord sourcePeriodRecord = 
+  QSqlRecord sourcePeriodRecord =
     periodModel->record(sourcePeriodViewCurrent.row());
   QString sourcePeriodId = sourcePeriodRecord.value("periodId").toString();
 
@@ -871,7 +925,7 @@ void MainForm::clonePeriod() {
   periodModel->insertRow(row);
 
   // edit new period name
-  QModelIndex periodNameIndex = 
+  QModelIndex periodNameIndex =
     periodModel->index(row, PeriodMetricsView_PeriodName);
 
   if (!periodNameIndex.isValid()) {
@@ -896,9 +950,9 @@ void MainForm::clonePeriod() {
     periodModel->setData(periodIdIndex, periodId, Qt::EditRole);
 
     // give a similar name to the source period
-    QSqlRecord sourcePeriodRecord = 
+    QSqlRecord sourcePeriodRecord =
       periodModel->record(sourcePeriodViewCurrent.row());
-    QString periodName = 
+    QString periodName =
       "Clone of " + sourcePeriodRecord.value("periodName").toString();
     periodModel->setData(periodNameIndex, periodName, Qt::EditRole);
 
@@ -911,10 +965,10 @@ void MainForm::clonePeriod() {
 
       if (periodModel->lastError().type() == QSqlError::StatementError) {
         messageText +=
-					"Error type=" + QString::number(periodModel->lastError().type())
+          "Error type=" + QString::number(periodModel->lastError().type())
           + "\n"
           + "QSqlError::StatementError\n"
-					+ "Statement=" + periodModel->selectStatement();
+          + "Statement=" + periodModel->selectStatement();
       }
       else {
         messageText +=
@@ -923,8 +977,8 @@ void MainForm::clonePeriod() {
 
       QMessageBox::warning(
         (QWidget *)0
-				, QObject::tr("Error: Could not add row to register.")
-				, messageText);
+        , QObject::tr("Error: Could not add row to register.")
+        , messageText);
 
       isRunningOkay = false;
     }
@@ -933,7 +987,7 @@ void MainForm::clonePeriod() {
       // clone the data
       qApp->clonePeriodAs(sourcePeriodId, periodId);
 
-  		updateViewsAfterChange();
+      updateViewsAfterChange();
     }
   }
 }
@@ -989,10 +1043,10 @@ void MainForm::registerItem() {
 
       if (registerModel->lastError().type() == QSqlError::StatementError) {
         messageText +=
-					"Error type=" + QString::number(registerModel->lastError().type())
+          "Error type=" + QString::number(registerModel->lastError().type())
           + "\n"
           + "QSqlError::StatementError\n"
-					+ "Statement=" + registerModel->selectStatement();
+          + "Statement=" + registerModel->selectStatement();
       }
       else {
         messageText +=
@@ -1001,8 +1055,8 @@ void MainForm::registerItem() {
 
       QMessageBox::warning(
         (QWidget *)0
-				, QObject::tr("Error: Could not insert an empty row into register.")
-				, messageText);
+        , QObject::tr("Error: Could not insert an empty row into register.")
+        , messageText);
 
       isRunningOkay = false;
     }
@@ -1087,10 +1141,10 @@ void MainForm::registerItem() {
 
       if (registerModel->lastError().type() == QSqlError::StatementError) {
         messageText +=
-					"Error type=" + QString::number(registerModel->lastError().type())
+          "Error type=" + QString::number(registerModel->lastError().type())
           + "\n"
           + "QSqlError::StatementError\n"
-					+ "Statement=" + registerModel->selectStatement();
+          + "Statement=" + registerModel->selectStatement();
       }
       else {
         messageText +=
@@ -1099,8 +1153,8 @@ void MainForm::registerItem() {
 
       QMessageBox::warning(
         (QWidget *)0
-				, QObject::tr("Error: Could not add row to register.")
-				, messageText);
+        , QObject::tr("Error: Could not add row to register.")
+        , messageText);
 
       isRunningOkay = false;
     }
@@ -1108,9 +1162,9 @@ void MainForm::registerItem() {
 
   updateViewsAfterChange();
 
-	// set the focus back to the unused item view
-	unusedView->setFocus();
-	unusedView->setCurrentIndex(unusedModelItemName);
+  // set the focus back to the unused item view
+  unusedView->setFocus();
+  unusedView->setCurrentIndex(unusedModelItemName);
 }
 
 void MainForm::unregisterItem() {
@@ -1217,12 +1271,12 @@ void MainForm::manageCategories() {
   disconnect(
     &form, SIGNAL(mappingChanged())
     , this, SLOT(setMappingChanged()));
-  
+
   if (getMappingChanged()) {
     showChangedOccured();
     resetMappingChanged();
   }
-  
+
   updateViews();
 }
 
@@ -1290,8 +1344,8 @@ void MainForm::createPeriodPanel() {
   periodView->setSelectionMode(QAbstractItemView::SingleSelection);
   periodView->setSelectionBehavior(QAbstractItemView::SelectRows);
   periodView->setEditTriggers(
-    QAbstractItemView::DoubleClicked 
-    | QAbstractItemView::EditKeyPressed 
+    QAbstractItemView::DoubleClicked
+    | QAbstractItemView::EditKeyPressed
     | QAbstractItemView::SelectedClicked);
   periodView->setColumnHidden(PeriodMetricsView_PeriodId, true);
   periodView->verticalHeader()->setVisible(false);
@@ -1452,8 +1506,8 @@ void MainForm::createRegisterPanel() {
   registerView->setSelectionMode(QAbstractItemView::SingleSelection);
   registerView->setSelectionBehavior(QAbstractItemView::SelectRows);
   registerView->setEditTriggers(
-    QAbstractItemView::DoubleClicked 
-    | QAbstractItemView::EditKeyPressed 
+    QAbstractItemView::DoubleClicked
+    | QAbstractItemView::EditKeyPressed
     | QAbstractItemView::SelectedClicked);
   registerView->setColumnHidden(RegisterMetricsView_RegisterId, true);
   registerView->setColumnHidden(RegisterMetricsView_PeriodId, true);
@@ -1746,8 +1800,8 @@ void MainForm::focusOnCategoryDockWindow(bool visible) {
 
 void MainForm::updateViewsAfterChange() {
   QModelIndex periodViewIndex = periodView->currentIndex();
-	QModelIndex flowViewIndex = flowView->currentIndex();
-	QModelIndex categoryViewIndex = categoryView->currentIndex();
+  QModelIndex flowViewIndex = flowView->currentIndex();
+  QModelIndex categoryViewIndex = categoryView->currentIndex();
 
   if (!periodModel->select()) {
     QMessageBox::warning(
@@ -1756,25 +1810,25 @@ void MainForm::updateViewsAfterChange() {
       , QObject::tr("There was an error with selecting the period model."));
   }
 
-	periodView->setCurrentIndex(periodViewIndex);
+  periodView->setCurrentIndex(periodViewIndex);
 
-	if (!flowModel->select()) {
+  if (!flowModel->select()) {
     QMessageBox::warning(
       (QWidget *)0
       , QObject::tr("Error: Selecting the flow model failed.")
       , QObject::tr("There was an error with selecting the flow model."));
   }
 
-	flowView->setCurrentIndex(flowViewIndex);
+  flowView->setCurrentIndex(flowViewIndex);
 
-	if (!categoryModel->select()) {
+  if (!categoryModel->select()) {
     QMessageBox::warning(
       (QWidget *)0
       , QObject::tr("Error: Selecting the category model failed.")
       , QObject::tr("There was an error with selecting the category model."));
   }
 
-	categoryView->setCurrentIndex(categoryViewIndex);
+  categoryView->setCurrentIndex(categoryViewIndex);
 }
 
 void MainForm::logUndoRedoChange() {
@@ -1791,7 +1845,7 @@ void MainForm::periodViewHeaderClicked(int logicalIndex) {
   periodViewHorizontalHeader->setSortIndicator(
     logicalIndex
     , periodViewHorizontalHeaderSortOrder);
-	periodView->sortByColumn(logicalIndex);
+  periodView->sortByColumn(logicalIndex);
 }
 
 void MainForm::flowViewHeaderClicked(int logicalIndex) {
@@ -1804,7 +1858,7 @@ void MainForm::flowViewHeaderClicked(int logicalIndex) {
   flowViewHorizontalHeader->setSortIndicator(
     logicalIndex
     , flowViewHorizontalHeaderSortOrder);
-  flowView->sortByColumn(logicalIndex);  
+  flowView->sortByColumn(logicalIndex);
 }
 
 void MainForm::categoryViewHeaderClicked(int logicalIndex) {
@@ -1817,7 +1871,7 @@ void MainForm::categoryViewHeaderClicked(int logicalIndex) {
   categoryViewHorizontalHeader->setSortIndicator(
     logicalIndex
     , categoryViewHorizontalHeaderSortOrder);
-  categoryView->sortByColumn(logicalIndex);  
+  categoryView->sortByColumn(logicalIndex);
 }
 
 void MainForm::registerViewHeaderClicked(int logicalIndex) {
@@ -1830,7 +1884,7 @@ void MainForm::registerViewHeaderClicked(int logicalIndex) {
   registerViewHorizontalHeader->setSortIndicator(
     logicalIndex
     , registerViewHorizontalHeaderSortOrder);
-  registerView->sortByColumn(logicalIndex);  
+  registerView->sortByColumn(logicalIndex);
 }
 
 void MainForm::unusedViewHeaderClicked(int logicalIndex) {
@@ -1843,7 +1897,7 @@ void MainForm::unusedViewHeaderClicked(int logicalIndex) {
   unusedViewHorizontalHeader->setSortIndicator(
     logicalIndex
     , unusedViewHorizontalHeaderSortOrder);
-  unusedView->sortByColumn(logicalIndex);  
+  unusedView->sortByColumn(logicalIndex);
 }
 
 void MainForm::setMappingChanged() {
@@ -1859,20 +1913,27 @@ bool MainForm::getMappingChanged() const {
 }
 
 void MainForm::writeSettings() const {
-  QSettings settings("cashflow", "cashflow");
-
-  settings.beginGroup("MainForm");
-  settings.setValue("size", size());
-  settings.setValue("pos", pos());
-  settings.endGroup();
+  if (closeAction->isEnabled() == true) {
+    QSettings settings("cashflow", "cashflow");
+  
+    settings.beginGroup("MainForm");
+    settings.setValue("size", size());
+    settings.setValue("pos", pos());
+    settings.endGroup();
+  }
 }
 
 void MainForm::readSettings() {
   QSettings settings("cashflow", "cashflow");
 
   settings.beginGroup("MainForm");
-  resize(settings.value("size", QSize(640, 480)).toSize());
-  move(settings.value("pos", QPoint(200, 200)).toPoint());
+
+  QSize initialSize = QSize(INITIAL_WIDTH, INITIAL_HEIGHT);
+  resize(settings.value("size", initialSize).toSize());
+
+  QPoint initialPosition = QPoint(INITIAL_WINDOW_X, INITIAL_WINDOW_Y);
+  move(settings.value("pos", initialPosition).toPoint());
+
   settings.endGroup();
 }
 

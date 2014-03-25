@@ -108,7 +108,7 @@
       void insertItem(
         QString flowName, QString categoryName, QString itemName);
 
-      bool saveFile(QString, QString);
+      bool saveFile(QString);
       bool openFile(QString);
       
       QString uniqueSuffix();

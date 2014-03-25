@@ -19,7 +19,7 @@
   #define _CASHFLOW_HPP_
   #include <QString>
   
-  const QString VERSION = "0.25.1";
+  const QString VERSION = "0.26.0";
 	const QString ABOUT_NAME_AND_VERSION =
 		"<h1>cashflow v" + VERSION + "</h1>";
   const QString ABOUT_COPYRIGHT_TEXT =
@@ -27,6 +27,13 @@
   const QString ABOUT_APP_DESCRIPTION =
     "<p>cashflow is a zero-sum budget program.</p>";
   
+  const int INITIAL_WIDTH_BLANK = 200;
+  const int INITIAL_HEIGHT_BLANK = 40;
+  const int INITIAL_WIDTH = 640;
+  const int INITIAL_HEIGHT = 480;
+  const int INITIAL_WINDOW_X = 200;
+  const int INITIAL_WINDOW_Y = 200;
+
   #ifndef ATLINE
     #define ATLINE QString(__FILE__) + "(" + QString("%1").arg(__LINE__) + ")"
   #endif // ATLINE

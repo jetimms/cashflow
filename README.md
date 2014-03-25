@@ -2,7 +2,7 @@ cashflow
 ========
 Zero-sum budgeting tool for the desktop
 
-Version 0.25.1
+Version 0.26.0
 
 Quick how-to
 ------------
@@ -28,7 +28,7 @@ Special Thanks
 
 Build Dependencies
 ------------------
-Qt 4.7.3 or later stable version of Qt 4
+Qt 4.8.5 or later stable version of Qt 4
 
 Sqlite version 3
 
@@ -166,6 +166,9 @@ X Error: BadWindow (invalid Window parameter) 3
 
 What's left to do
 -----------------
+Make usage upon startup easier to understand.
+	Place buttons on canvas at startup.
+
 Allow customizing of styles and colors.
 
 Allow saving of preferences on close.
