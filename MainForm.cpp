@@ -604,15 +604,15 @@ void MainForm::createEmptyMenus() {
 }
 
 void MainForm::createEmptyButtons() {
-  newButton = new QPushButton(tr("New"));
+  newButton = new QPushButton(tr("New File"));
   newButton->setObjectName("newButton");
   newButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-  openButton = new QPushButton(tr("Open"));
+  openButton = new QPushButton(tr("Open File"));
   openButton->setObjectName("openButton");
   openButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-  exitButton = new QPushButton(tr("Exit"));
+  exitButton = new QPushButton(tr("Exit Program"));
   exitButton->setObjectName("exitButton");
   exitButton->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 

@@ -2,7 +2,7 @@ cashflow
 ========
 Zero-sum budgeting tool for the desktop
 
-Version 0.26.0
+Version 0.26.1
 
 Quick how-to
 ------------
@@ -166,9 +166,6 @@ X Error: BadWindow (invalid Window parameter) 3
 
 What's left to do
 -----------------
-Make usage upon startup easier to understand.
-	Place buttons on canvas at startup.
-
 Allow customizing of styles and colors.
 
 Allow saving of preferences on close.
@@ -207,6 +204,13 @@ Move to Qt 5
 
 What's done
 -----------
+[Fixed in v0.26.1 on 20140325]
+Changed the empty canvas buttons from "New", "Open" and "Exit" to "New File", "Open File" and "Exit Program".
+
+[Fixed in v0.26.0 on 20140324]
+Make usage upon startup easier to understand.
+	Place buttons on canvas at startup.
+
 [Fixed in v0.25.1 on 20140301]
 Remove console window in Windows.
   I added "CONFIG -= console" when the qmake is ran with the release config flag.
