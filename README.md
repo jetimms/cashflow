@@ -2,7 +2,7 @@ cashflow
 ========
 Zero-sum budgeting tool for the desktop
 
-Version 0.26.1
+Version 0.27.0
 
 Quick how-to
 ------------
@@ -24,13 +24,15 @@ Special Thanks
 --------------
 * [Qt Project](http://qt-project.org/)
 * [Sqlite](https://sqlite.org/)
-* Sarfraz Shoukat [smashingmagazine made available via greenpit.com](http://www.smashingmagazine.com/2010/07/14/gcons-free-all-purpose-icons-for-designers-and-developers-100-icons-psd/)
-* Turqois [smashingmagazine made available via gemicon.net](http://www.smashingmagazine.com/2013/01/06/freebie-gemicon-icon-set-600-psd-source-png/)
+* [Mepis Linux](http://www.mepis.org/)
+* [SmashingMagazine.com](http://www.smashingmagazine.com/)
+* Sarfraz Shoukat @ [smashingmagazine made available via greenpit.com](http://www.smashingmagazine.com/2010/07/14/gcons-free-all-purpose-icons-for-designers-and-developers-100-icons-psd/)
+* Turqois @ [smashingmagazine made available via gemicon.net](http://www.smashingmagazine.com/2013/01/06/freebie-gemicon-icon-set-600-psd-source-png/)
+* [GIMP - The GNU Image Manipulation Program](http://www.gimp.org)
 
 Build Dependencies
 ------------------
 Qt 4.8.5 or later stable version of Qt 4
-
 Sqlite version 3
 
 Usage
@@ -205,6 +207,9 @@ Move to Qt 5
 
 What's done
 -----------
+[Done in v0.27.0 on 20140331]
+I added toolbars that replicates what is in the main window menus.
+
 [Fixed in v0.26.1 on 20140325]
 Changed the empty canvas buttons from "New", "Open" and "Exit" to "New File", "Open File" and "Exit Program".
 
