@@ -34,6 +34,15 @@
   const int INITIAL_WINDOW_X = 200;
   const int INITIAL_WINDOW_Y = 200;
 
+  const QString imagePath =
+    ":/images/";
+
+  const QString imagePathSmashing_gcons =
+    ":/images/SmashingMagazine/free-all-purpose-icons-gcons/";
+
+  const QString imagePathSmashing_gemicons =
+    ":/images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/";
+
   #ifndef ATLINE
     #define ATLINE QString(__FILE__) + "(" + QString("%1").arg(__LINE__) + ")"
   #endif // ATLINE

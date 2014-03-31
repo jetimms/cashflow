@@ -1,12 +1,62 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/add-item.png</file>
-        <file>images/copy-item.png</file>
-        <file>images/delete-item.png</file>
         <file>images/icon.png</file>
-        <file>images/lookup.png</file>
-        <file>images/save.png</file>
-        <file>images/Scissors.png</file>
-        <file>images/search.png</file>
+        <file>images/SmashingMagazine/free-all-purpose-icons-gcons/add-item.png</file>
+        <file>images/SmashingMagazine/free-all-purpose-icons-gcons/copy-item.png</file>
+        <file>images/SmashingMagazine/free-all-purpose-icons-gcons/delete-item.png</file>
+        <file>images/SmashingMagazine/free-all-purpose-icons-gcons/lookup.png</file>
+        <file>images/SmashingMagazine/free-all-purpose-icons-gcons/save.png</file>
+        <file>images/SmashingMagazine/free-all-purpose-icons-gcons/Scissors.png</file>
+        <file>images/SmashingMagazine/free-all-purpose-icons-gcons/search.png</file>
+
+        <!-- new file -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 11/6.png</file>
+        <!-- open -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 11/3.png</file>
+        <!-- revert -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 10/14.png</file>
+        <!-- close -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 11/1.png</file>
+
+        <!-- save file -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 10/7.png</file>
+        <!-- save file as -->
+        <file>images/save-file-as.png</file>
+        <!-- backup file -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 10/3.png</file>
+
+        <!-- manage categories -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 5/7.png</file>
+        <!-- manage items -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 5/8.png</file>
+
+        <!-- properties -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 4/2.png</file>
+
+        <!-- undo change -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 8/4.png</file>
+        <!-- redo change -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 8/5.png</file>
+
+        <!-- add period -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 8/11.png</file>
+        <!-- clone period -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 8/9.png</file>
+        <!-- delete period -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 8/12.png</file>
+
+        <!-- register item -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 8/6.png</file>
+        <!-- unregister item -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 8/7.png</file>
+
+        <!-- toggle period panel -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 9/5.png</file>
+        <!-- toggle flow panel -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 9/11.png</file>
+        <!-- toggle category panel -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 9/10.png</file>
+        <!-- toggle unregistered item panel -->
+        <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 9/9.png</file>
     </qresource>
 </RCC>

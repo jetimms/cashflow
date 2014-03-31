@@ -24,7 +24,8 @@ Special Thanks
 --------------
 * [Qt Project](http://qt-project.org/)
 * [Sqlite](https://sqlite.org/)
-* [greenpit.com](http://www.greepit.com/open-source-icons-gcons/)
+* Sarfraz Shoukat [smashingmagazine made available via greenpit.com](http://www.smashingmagazine.com/2010/07/14/gcons-free-all-purpose-icons-for-designers-and-developers-100-icons-psd/)
+* Turqois [smashingmagazine made available via gemicon.net](http://www.smashingmagazine.com/2013/01/06/freebie-gemicon-icon-set-600-psd-source-png/)
 
 Build Dependencies
 ------------------

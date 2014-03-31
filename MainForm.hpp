@@ -1,11 +1,11 @@
 //	Copyright	2014 Jason Eric	Timms
-// 
+//
 //		Licensed under the Apache	License, Version 2.0 (the	"License");
 //		you	may	not	use	this file	except in	compliance with	the	License.
 //		You	may	obtain a copy	of the License at
-// 
+//
 //			http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 //		Unless required	by applicable	law	or agreed	to in	writing, software
 //		distributed	under	the	License	is distributed on	an "AS IS" BASIS,
 //		WITHOUT	WARRANTIES OR	CONDITIONS OF	ANY	KIND,	either express or	implied.
@@ -23,9 +23,11 @@
 	#include <QTableView>
 	#include "SqlTableModel.hpp"
 
-	class	QAction;	
+	class	QAction;
+	class QComboBox;
 	class	QDialogButtonBox;
 	class	QGroupBox;
+	class	QHBoxLayout;
 	class	QLabel;
 	class	QMenu;
 	class	QModelIndex;
@@ -33,6 +35,7 @@
 	class	QShortcut;
 	class	QSplitter;
 	class	QSqlTableModel;
+	class QToolBar;
 	class	QVBoxLayout;
 
 	enum {
@@ -48,7 +51,7 @@
 		,	PeriodMetricsView_BudgetBalance	=	2
 		,	PeriodMetricsView_ActualBalance	=	3
 		,	PeriodMetricsView_DifferenceBalance	=	4
-		
+
 		,	FlowMetricsView_PeriodId = 0
 		,	FlowMetricsView_FlowId = 1
 		,	FlowMetricsView_PeriodName = 2
@@ -71,7 +74,7 @@
 	private	slots:
 		void setup();
 		void setupEmpty();
-		
+
 		void newFile();
 		void open(QString	fileName = QString());
 		void revertToSave();
@@ -80,6 +83,7 @@
 		void saveAs();
 		void backupAs();
 		void openRecentFile();
+		void openRecentFileByIndex(int index);
 		void properties();
 		void exitApplication();
 
@@ -88,7 +92,7 @@
 
 		void undo();
 		void redo();
-		
+
 		void addPeriod();
 		void clonePeriod();
 		void deletePeriod();
@@ -152,9 +156,9 @@
 		void createMenus();
 		void createEmptyMenus();
 		void createEmptyButtons();
-	
+
 		void deleteFileFormObjects();
-	
+
 		void setFlowRestriction();
 		void setCategoryRestriction();
 		void setRegisterRestriction();
@@ -170,6 +174,14 @@
 		void readSettings();
 
 		void closeEvent(QCloseEvent	*event);
+
+    void createEmptyToolBar();
+    void createFileToolBar();
+    void createEditToolBar();
+    void createViewToolBar();
+
+    void showEmptyToolBar();
+    void showFileToolBar();
 
 		SqlTableModel	*periodModel;
 		SqlTableModel	*flowModel;
@@ -204,7 +216,8 @@
 		QWidget	*registerPanel;
 		QWidget	*unusedPanel;
 
-		QVBoxLayout	*periodLayout;
+//		QVBoxLayout	*periodLayout;
+		QHBoxLayout	*periodLayout;
 		QVBoxLayout	*flowLayout;
 		QVBoxLayout	*categoryLayout;
 		QVBoxLayout	*registerLayout;
@@ -273,6 +286,13 @@
 		QDialogButtonBox *emptyButtonBox;
 
 		bool mappingChanged;
+
+    QToolBar *emptyToolBar;
+    QToolBar *fileToolBar;
+    QToolBar *editToolBar;
+    QToolBar *viewToolBar;
+
+    QComboBox *recentFilesComboBox;
 	};
 
 #endif //	_MAINFORM_HPP_

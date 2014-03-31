@@ -95,6 +95,13 @@ MainForm::MainForm()
   categoryViewHorizontalHeaderSortOrder = Qt::AscendingOrder;
   registerViewHorizontalHeaderSortOrder = Qt::AscendingOrder;
   unusedViewHorizontalHeaderSortOrder = Qt::AscendingOrder;
+
+  createEmptyToolBar();
+  createFileToolBar();
+  createEditToolBar();
+  createViewToolBar();
+
+  showEmptyToolBar();
 }
 
 void MainForm::setupEmpty() {
@@ -192,6 +199,8 @@ void MainForm::setup() {
   categoryViewHorizontalHeader->setSortIndicatorShown(true);
   registerViewHorizontalHeader->setSortIndicatorShown(true);
   unusedViewHorizontalHeader->setSortIndicatorShown(true);
+
+  showFileToolBar();
 }
 
 void MainForm::showChangedOccured() {
@@ -230,12 +239,28 @@ void MainForm::createPanels() {
 }
 
 void MainForm::dockSummaryPanels() {
-  setDockOptions(QMainWindow::ForceTabbedDocks);
-  setTabPosition(Qt::TopDockWidgetArea, QTabWidget::South);
+  setDockOptions(QMainWindow::AllowTabbedDocks);
+  setTabPosition(Qt::TopDockWidgetArea, QTabWidget::West);
 
   periodDockWidget = new QDockWidget(tr("&Period"));
+  periodDockWidget->setObjectName("periodDockWidget");
   periodDockWidget->setWidget(periodPanel);
   periodDockWidget->setTitleBarWidget(new QWidget());
+
+  float minWidthRatio = 9.0 / 10;
+  float minHeightRatio = 1.0 / 4;
+
+  periodDockWidget->setMinimumSize(
+    periodView->size().width() * minWidthRatio
+    , periodView->size().height() * minHeightRatio);
+
+  float maxWidthRatio = 9.0 / 10;
+  float maxHeightRatio = 6.0 / 10;
+
+  periodDockWidget->setMaximumSize(
+    periodView->size().width() * maxWidthRatio
+    , periodView->size().height() * maxHeightRatio);
+
   addDockWidget(Qt::TopDockWidgetArea, periodDockWidget);
 
   connect(
@@ -245,8 +270,18 @@ void MainForm::dockSummaryPanels() {
     , SLOT(focusOnPeriodDockWindow(bool)));
 
   flowDockWidget = new QDockWidget(tr("F&low"));
+  flowDockWidget->setObjectName("flowDockWidget");
   flowDockWidget->setWidget(flowPanel);
   flowDockWidget->setTitleBarWidget(new QWidget());
+
+  flowDockWidget->setMinimumSize(
+    flowView->size().width() * minWidthRatio
+    , flowView->size().height() * minHeightRatio);
+
+  flowDockWidget->setMaximumSize(
+    flowView->size().width() * maxWidthRatio
+    , flowView->size().height() * maxHeightRatio);
+
   addDockWidget(Qt::TopDockWidgetArea, flowDockWidget);
 
   connect(
@@ -256,8 +291,18 @@ void MainForm::dockSummaryPanels() {
     , SLOT(focusOnFlowDockWindow(bool)));
 
   categoryDockWidget = new QDockWidget(tr("&Category"));
+  categoryDockWidget->setObjectName("categoryDockWidget");
   categoryDockWidget->setWidget(categoryPanel);
   categoryDockWidget->setTitleBarWidget(new QWidget());
+
+  categoryDockWidget->setMinimumSize(
+    categoryView->size().width() * minWidthRatio
+    , categoryView->size().height() * minHeightRatio);
+
+  categoryDockWidget->setMaximumSize(
+    categoryView->size().width() * maxWidthRatio
+    , categoryView->size().height() * maxHeightRatio);
+
   addDockWidget(Qt::TopDockWidgetArea, categoryDockWidget);
 
   connect(
@@ -293,43 +338,47 @@ void MainForm::createActions() {
 
 void MainForm::createFileActions() {
   newAction = new QAction(tr("&New"), this);
-  newAction->setIcon(QIcon(":/images/add-item.png"));
+  newAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 11/6.png"));
   newAction->setShortcut(QKeySequence::New);
   newAction->setStatusTip(tr("Create a new cashflow file"));
   connect(newAction, SIGNAL(triggered()), this, SLOT(newFile()));
 
   openAction = new QAction(tr("&Open..."), this);
-//  openAction->setIcon(QIcon(":/images/open.png"));
+  openAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 11/3.png"));
   openAction->setShortcut(QKeySequence::Open);
   openAction->setStatusTip(tr("Open an existing cashflow file"));
   connect(openAction, SIGNAL(triggered()), this, SLOT(open()));
 
   revertAction = new QAction(tr("&Revert"), this);
-//  revertAction->setIcon(QIcon(":/images/revert.png"));
+  revertAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 10/14.png"));
   revertAction->setStatusTip(tr("Revert to the last save of the current cashflow file"));
   connect(revertAction, SIGNAL(triggered()), this, SLOT(revertToSave()));
 
   closeAction = new QAction(tr("&Close"), this);
+  closeAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 11/1.png"));
   closeAction->setShortcut(QKeySequence::Close);
   closeAction->setStatusTip(tr("Close the current cashflow file"));
   connect(closeAction, SIGNAL(triggered()), this, SLOT(closeFile()));
 
   saveAction = new QAction(tr("&Save"), this);
-  saveAction->setIcon(QIcon(":/images/save.png"));
+  saveAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 10/7.png"));
   saveAction->setShortcut(QKeySequence::Save);
   saveAction->setStatusTip(tr("Save the current cashflow file"));
   connect(saveAction, SIGNAL(triggered()), this, SLOT(save()));
 
   saveAsAction = new QAction(tr("Save &As..."), this);
+  saveAsAction->setIcon(QIcon(imagePath + "/save-file-as.png"));
   saveAsAction->setShortcut(QKeySequence::SaveAs);
   saveAsAction->setStatusTip(tr("Save the current cashflow file under a new name and load the new file"));
   connect(saveAsAction, SIGNAL(triggered()), this, SLOT(saveAs()));
 
   backupAsAction = new QAction(tr("&Backup As..."), this);
+  backupAsAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 10/3.png"));
   backupAsAction->setStatusTip(tr("Save the current cashflow file under a new name and keep the original file loaded"));
   connect(backupAsAction, SIGNAL(triggered()), this, SLOT(backupAs()));
 
   manageCategoriesAction = new QAction(tr("Manage &Categories..."), this);
+  manageCategoriesAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 5/7.png"));
   manageCategoriesAction->setShortcut(tr("Ctrl+Alt+Shift+C"));
   manageCategoriesAction->setStatusTip(
     tr("Manage the mapping of the categories"));
@@ -340,6 +389,7 @@ void MainForm::createFileActions() {
     , SLOT(manageCategories()));
 
   manageItemsAction = new QAction(tr("Manage &Items..."), this);
+  manageItemsAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 5/8.png"));
   manageItemsAction->setShortcut(tr("Ctrl+Alt+Shift+I"));
   manageItemsAction->setStatusTip(
     tr("Manage the mapping of the items"));
@@ -350,6 +400,7 @@ void MainForm::createFileActions() {
     , SLOT(manageItems()));
 
   propertiesAction = new QAction(tr("P&roperties..."), this);
+  propertiesAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 4/2.png"));
   propertiesAction->setStatusTip(tr("Give some info on the current file"));
   connect(propertiesAction, SIGNAL(triggered()), this, SLOT(properties()));
 
@@ -372,6 +423,7 @@ void MainForm::createFileActions() {
 
 void MainForm::createEditActions() {
   undoAction = new QAction(tr("&Undo"), this);
+  undoAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 8/4.png"));
   undoAction->setShortcut(QKeySequence::Undo);
   undoAction->setStatusTip(
     tr("Undo the data changes"));
@@ -383,6 +435,7 @@ void MainForm::createEditActions() {
     , SLOT(undo()));
 
   redoAction = new QAction(tr("&Redo"), this);
+  redoAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 8/5.png"));
   redoAction->setShortcut(QKeySequence::Redo);
   redoAction->setStatusTip(
     tr("Redo the data changes"));
@@ -394,6 +447,7 @@ void MainForm::createEditActions() {
     , SLOT(redo()));
 
   addPeriodAction = new QAction(tr("&Add Period"), this);
+  addPeriodAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 8/11.png"));
   addPeriodAction->setShortcut(tr("Ctrl+A"));
   addPeriodAction->setStatusTip(
     tr("Add a period to the budget"));
@@ -404,6 +458,7 @@ void MainForm::createEditActions() {
     , SLOT(addPeriod()));
 
   clonePeriodAction = new QAction(tr("&Clone Period"), this);
+  clonePeriodAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 8/9.png"));
   clonePeriodAction->setStatusTip(
     tr("Clone the current period"));
   connect(
@@ -413,6 +468,7 @@ void MainForm::createEditActions() {
     , SLOT(clonePeriod()));
 
   deletePeriodAction = new QAction(tr("&Delete Period"), this);
+  deletePeriodAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 8/12.png"));
   deletePeriodAction->setShortcut(tr("Ctrl+D"));
   deletePeriodAction->setStatusTip(
     tr("Remove a period from the budget"));
@@ -423,6 +479,7 @@ void MainForm::createEditActions() {
     , SLOT(deletePeriod()));
 
   registerItemAction = new QAction(tr("&Register Item"), this);
+  registerItemAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 8/6.png"));
   registerItemAction->setShortcut(tr("Ctrl+R"));
   registerItemAction->setStatusTip(
     tr("Register an unused item"));
@@ -433,6 +490,7 @@ void MainForm::createEditActions() {
     , SLOT(registerItem()));
 
   unregisterItemAction = new QAction(tr("&Unregister Item"), this);
+  unregisterItemAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 8/7.png"));
   unregisterItemAction->setShortcut(tr("Ctrl+U"));
   unregisterItemAction->setStatusTip(
     tr("Remove a registered item"));
@@ -446,6 +504,7 @@ void MainForm::createEditActions() {
 void MainForm::createViewActions() {
   toggleShowPeriodAction =
     new QAction(tr("Show/Hide Period Panel"), this);
+  toggleShowPeriodAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 9/5.png"));
   toggleShowPeriodAction->setShortcut(tr("Ctrl+Alt+P"));
   toggleShowPeriodAction->setStatusTip(tr("Show or hide the period panel"));
   connect(
@@ -455,6 +514,7 @@ void MainForm::createViewActions() {
     , SLOT(toggleShowPeriodPanel()));
 
   toggleShowFlowAction = new QAction(tr("Show/Hide Flow Panel"), this);
+  toggleShowFlowAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 9/11.png"));
   toggleShowFlowAction->setShortcut(tr("Ctrl+Alt+F"));
   toggleShowFlowAction->setStatusTip(tr("Show or hide the flow panel"));
   connect(
@@ -464,6 +524,7 @@ void MainForm::createViewActions() {
     , SLOT(toggleShowFlowPanel()));
 
   toggleShowCategoryAction = new QAction(tr("Show/Hide Category Panel"), this);
+  toggleShowCategoryAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 9/10.png"));
   toggleShowCategoryAction->setShortcut(tr("Ctrl+Alt+C"));
   toggleShowCategoryAction->setStatusTip(tr("Show or hide the category panel"));
   connect(
@@ -474,6 +535,7 @@ void MainForm::createViewActions() {
 
   toggleShowUnusedAction =
     new QAction(tr("Show/Hide Unregistered Item Panel"), this);
+  toggleShowUnusedAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 9/9.png"));
   toggleShowUnusedAction->setShortcut(tr("Ctrl+Alt+U"));
   toggleShowUnusedAction->setStatusTip(
     tr("Show or hide the unregistered item panel"));
@@ -655,6 +717,7 @@ void MainForm::newFile() {
     if (qApp->newFile()) {
       deleteFileFormObjects();
       setup();
+      showFileToolBar();
       updateViewsAfterChange();
       periodView->setFocus();
       displayDefaultTitle();
@@ -671,6 +734,7 @@ void MainForm::open(QString fileName) {
     if (qApp->open(fileName)) {
       deleteFileFormObjects();
       setup();
+      showFileToolBar();
       addCurrentFileToRecentList();
       updateViewsAfterChange();
       periodView->setFocus();
@@ -692,6 +756,7 @@ void MainForm::closeFile() {
     qApp->clearSavedDatabaseName();
     deleteFileFormObjects();
     setupEmpty();
+    showEmptyToolBar();
     displayDefaultTitle();
 
     revertAction->setEnabled(false);
@@ -704,6 +769,21 @@ void MainForm::openRecentFile() {
   bool isRunningOkay = true;
 
   QAction *action = qobject_cast<QAction *>(sender());
+  QString fileName = action->data().toString();
+
+  if (action == (QAction *)0) {
+    isRunningOkay = false;
+  }
+
+  if (isRunningOkay) {
+    open(fileName);
+  }
+}
+
+void MainForm::openRecentFileByIndex(int index) {
+  bool isRunningOkay = true;
+
+  QAction *action = recentFileActions[index];
   QString fileName = action->data().toString();
 
   if (action == (QAction *)0) {
@@ -1332,7 +1412,7 @@ void MainForm::createPeriodPanel() {
   periodView = new TableView(this);
   periodView->setModel(periodModel);
   periodView->setItemDelegate(new QSqlRelationalDelegate(this));
-  periodView->setHorizontalHeader(new HeaderView(Qt::Horizontal, this));
+//  periodView->setHorizontalHeader(new HeaderView(Qt::Horizontal, this));
 
   // set delegates for numeric columns
   periodView->setItemDelegateForColumn(
@@ -1357,7 +1437,7 @@ void MainForm::createPeriodPanel() {
     , this
     , SLOT(updatePeriodView()));
 
-  periodLayout = new QVBoxLayout;
+  periodLayout = new QHBoxLayout;
   periodLayout->addWidget(periodView);
 
   periodPanel = new QWidget;
@@ -1915,10 +1995,12 @@ bool MainForm::getMappingChanged() const {
 void MainForm::writeSettings() const {
   if (closeAction->isEnabled() == true) {
     QSettings settings("cashflow", "cashflow");
-  
+
     settings.beginGroup("MainForm");
     settings.setValue("size", size());
     settings.setValue("pos", pos());
+    settings.setValue("geometry", saveGeometry());
+    settings.setValue("windowState", saveState());
     settings.endGroup();
   }
 }
@@ -1934,10 +2016,124 @@ void MainForm::readSettings() {
   QPoint initialPosition = QPoint(INITIAL_WINDOW_X, INITIAL_WINDOW_Y);
   move(settings.value("pos", initialPosition).toPoint());
 
+  restoreGeometry(settings.value("geometry").toByteArray());
+  restoreState(settings.value("windowState").toByteArray());
+
   settings.endGroup();
 }
 
 void MainForm::closeEvent(QCloseEvent *event) {
   writeSettings();
   event->accept();
+}
+
+void MainForm::createEmptyToolBar() {
+  emptyToolBar = addToolBar(tr("Empty Toolbar"));
+  emptyToolBar->setObjectName(tr("emptyToolBar"));
+  emptyToolBar->setAllowedAreas(Qt::TopToolBarArea);
+  emptyToolBar->setMovable(false);
+
+  emptyToolBar->addAction(newAction);
+  emptyToolBar->addAction(openAction);
+
+  recentFilesComboBox = new QComboBox;
+  QStringList recentFiles = qApp->getRecentFiles();
+
+  for (int i = 0; i < recentFiles.count(); ++i) {
+    QString text = recentFiles[i];
+    recentFilesComboBox->addItem(text);
+  }
+
+  connect(
+    recentFilesComboBox
+    , SIGNAL(currentIndexChanged(int))
+    , this
+    , SLOT(openRecentFileByIndex(int)));
+
+  emptyToolBar->addWidget(recentFilesComboBox);
+}
+
+void MainForm::createFileToolBar() {
+  fileToolBar = addToolBar(tr("File Toolbar"));
+  fileToolBar->setObjectName(tr("fileToolBar"));
+  fileToolBar->setAllowedAreas(Qt::TopToolBarArea);
+  fileToolBar->setMovable(false);
+
+  fileToolBar->addAction(newAction);
+  fileToolBar->addAction(openAction);
+  fileToolBar->addAction(revertAction);
+  fileToolBar->addAction(closeAction);
+  fileToolBar->addSeparator();
+  fileToolBar->addAction(saveAction);
+  fileToolBar->addAction(saveAsAction);
+  fileToolBar->addAction(backupAsAction);
+  fileToolBar->addSeparator();
+  fileToolBar->addAction(propertiesAction);
+  fileToolBar->addSeparator();
+  fileToolBar->addAction(manageCategoriesAction);
+  fileToolBar->addAction(manageItemsAction);
+  fileToolBar->addSeparator();
+
+  recentFilesComboBox = new QComboBox();
+  QStringList recentFiles = qApp->getRecentFiles();
+
+  for (int i = 0; i < recentFiles.count(); ++i) {
+    QString text = recentFiles[i];
+    recentFilesComboBox->addItem(text);
+  }
+
+  connect(
+    recentFilesComboBox
+    , SIGNAL(currentIndexChanged(int))
+    , this
+    , SLOT(openRecentFileByIndex(int)));
+
+  fileToolBar->addWidget(recentFilesComboBox);
+}
+
+void MainForm::createEditToolBar() {
+  addToolBarBreak();
+
+  editToolBar = addToolBar(tr("Edit Toolbar"));
+  editToolBar->setObjectName(tr("editToolBar"));
+  editToolBar->setAllowedAreas(Qt::TopToolBarArea);
+  editToolBar->setMovable(false);
+
+  editToolBar->addAction(undoAction);
+  editToolBar->addAction(redoAction);
+  editToolBar->addSeparator();
+  editToolBar->addAction(addPeriodAction);
+  editToolBar->addAction(clonePeriodAction);
+  editToolBar->addAction(deletePeriodAction);
+  editToolBar->addSeparator();
+  editToolBar->addAction(registerItemAction);
+  editToolBar->addAction(unregisterItemAction);
+}
+
+void MainForm::createViewToolBar() {
+  addToolBarBreak();
+
+  viewToolBar = addToolBar(tr("View Toolbar"));
+  viewToolBar->setObjectName(tr("viewToolBar"));
+  viewToolBar->setAllowedAreas(Qt::TopToolBarArea);
+  viewToolBar->setMovable(false);
+
+  viewToolBar->addAction(toggleShowPeriodAction);
+  viewToolBar->addAction(toggleShowFlowAction);
+  viewToolBar->addAction(toggleShowCategoryAction);
+  viewToolBar->addAction(toggleShowUnusedAction);
+}
+
+void MainForm::showEmptyToolBar() {
+  emptyToolBar->setVisible(true);
+  fileToolBar->setVisible(false);
+  editToolBar->setVisible(false);
+  viewToolBar->setVisible(false);
+}
+
+void MainForm::showFileToolBar() {
+  emptyToolBar->setVisible(false);
+  fileToolBar->setVisible(true);
+  editToolBar->setVisible(true);
+  viewToolBar->setVisible(true);
 }

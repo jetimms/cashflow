@@ -16,6 +16,7 @@
 //    The class that houses and communicates between the data and main form objects.
 
 #include <QApplication>
+#include <QDebug>
 #include <QtGui>
 #include "Application.hpp"
 #include "MainForm.hpp"
