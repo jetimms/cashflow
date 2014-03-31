@@ -1,14 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>images/icon.png</file>
-        <file>images/SmashingMagazine/free-all-purpose-icons-gcons/add-item.png</file>
-        <file>images/SmashingMagazine/free-all-purpose-icons-gcons/copy-item.png</file>
-        <file>images/SmashingMagazine/free-all-purpose-icons-gcons/delete-item.png</file>
-        <file>images/SmashingMagazine/free-all-purpose-icons-gcons/lookup.png</file>
-        <file>images/SmashingMagazine/free-all-purpose-icons-gcons/save.png</file>
-        <file>images/SmashingMagazine/free-all-purpose-icons-gcons/Scissors.png</file>
-        <file>images/SmashingMagazine/free-all-purpose-icons-gcons/search.png</file>
-
         <!-- new file -->
         <file>images/SmashingMagazine/free-icon-set-gemicon/PNG/32x32/row 11/6.png</file>
         <!-- open -->

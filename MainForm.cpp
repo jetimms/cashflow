@@ -247,15 +247,15 @@ void MainForm::dockSummaryPanels() {
   periodDockWidget->setWidget(periodPanel);
   periodDockWidget->setTitleBarWidget(new QWidget());
 
-  float minWidthRatio = 9.0 / 10;
-  float minHeightRatio = 1.0 / 4;
+  float minWidthRatio = 9.0f / 10.0f;
+  float minHeightRatio = 1.0f / 4.0f;
 
   periodDockWidget->setMinimumSize(
     periodView->size().width() * minWidthRatio
     , periodView->size().height() * minHeightRatio);
 
-  float maxWidthRatio = 9.0 / 10;
-  float maxHeightRatio = 6.0 / 10;
+  float maxWidthRatio = 9.0f / 10.0f;
+  float maxHeightRatio = 6.0f / 10.0f;
 
   periodDockWidget->setMaximumSize(
     periodView->size().width() * maxWidthRatio

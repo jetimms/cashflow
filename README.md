@@ -2,7 +2,7 @@ cashflow
 ========
 Zero-sum budgeting tool for the desktop
 
-Version 0.27.0
+Version 0.27.1
 
 Quick how-to
 ------------
@@ -207,6 +207,10 @@ Move to Qt 5
 
 What's done
 -----------
+[Fixed in v0.27.1 on 20140331]
+I removed the unused icon png files from the qrc file.
+I added f nomenclature to the end of the floats used to determine the min and max summary metric ratios.
+
 [Done in v0.27.0 on 20140331]
 I added toolbars that replicates what is in the main window menus.
 

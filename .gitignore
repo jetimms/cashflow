@@ -29,3 +29,7 @@ qrc_*.cpp
 
 # distribution folders
 distribute
+
+# free to use, non-free distribution licensed image files
+images/SmashingMagazine/free-all-purpose-icons-gcons
+images/SmashingMagazine/free-icon-set-gemicon
