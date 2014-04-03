@@ -19,8 +19,11 @@
 #include <QtGui>
 #include <QtSql>
 #include <QDebug>
-#include "SqlTableModel.hpp"
+
 #include "cashflow.hpp"
+#include "SqlTableModel.hpp"
+
+using Cashflow::SqlTableModel;
 
 SqlTableModel::SqlTableModel(
     QObject *parent, QSqlDatabase db)

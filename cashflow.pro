@@ -59,6 +59,7 @@ SOURCES = \
   ManageItemsForm.cpp \
   MainForm.cpp \
   SqlTableModel.cpp \
+  TableView.cpp \
   main.cpp
 RESOURCES = \
   cashflow.qrc

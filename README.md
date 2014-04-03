@@ -2,7 +2,7 @@ cashflow
 ========
 Zero-sum budgeting tool for the desktop
 
-Version 0.27.1
+Version 0.27.2
 
 Quick how-to
 ------------
@@ -207,6 +207,13 @@ Move to Qt 5
 
 What's done
 -----------
+[Fixed in v0.27.2 on 20140403]
+The TableView editors were losing entered data if the user did not specifically hit the Enter key after changing an editable value. This fix will allow clicking off or Tabbing off of the row to have the data save.
+Inspired by Virgil Drupas (thanks!):
+http://www.hardcoded.net/articles/how-to-customize-qtableview-editing-behavior
+
+Added all classes to the Cashflow namespace.
+
 [Fixed in v0.27.1 on 20140331]
 I removed the unused icon png files from the qrc file.
 I added f nomenclature to the end of the floats used to determine the min and max summary metric ratios.

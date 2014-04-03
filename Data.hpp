@@ -123,4 +123,3 @@
     };
   }
 #endif // _CASHFLOW_DATA_HPP_
-

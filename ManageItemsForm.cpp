@@ -25,6 +25,9 @@
 #include "TableView.hpp"
 
 using Cashflow::Application;
+using Cashflow::ManageItemsForm;
+using Cashflow::SqlTableModel;
+using Cashflow::TableView;
 
 ManageItemsForm::ManageItemsForm(
     int id, QWidget *parent) : QDialog(parent) {

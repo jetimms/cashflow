@@ -21,34 +21,35 @@
 
   #include <QHeaderView>
 
-  class HeaderView : public QHeaderView {
-  public:
-    HeaderView(Qt::Orientation orientation, QWidget *parent = (QWidget *)0)
-        : QHeaderView(orientation, parent) {
-    }
-
-  protected:
-    void paintEvent(QPaintEvent *event) {
-//      QStylePainter painter(this);
-//      QStyleOptionComboBox opt;
-//      initStyleOption(&opt);
-//      painter.drawComplexControl(QStyle::CC_ComboBox, opt);
-//
-//      QVariant itemData = this->itemData(this->currentIndex(), Qt::DisplayRole);
-//
-//      if (!itemData.isNull() && qVariantCanConvert<QPen>(itemData)) {
-//        style()->drawItemText(
-//          &painter
-//          , this->rect()
-//          , Qt::AlignLeft
-//          , (this->palette())
-//          , true
-//          , itemData.toString());
-//      }
-
-      return QHeaderView::paintEvent(event);
-    }
-  };
-
+  namespace Cashflow {
+    class HeaderView : public QHeaderView {
+    public:
+      HeaderView(Qt::Orientation orientation, QWidget *parent = (QWidget *)0)
+          : QHeaderView(orientation, parent) {
+      }
+  
+    protected:
+      void paintEvent(QPaintEvent *event) {
+//        QStylePainter painter(this);
+//        QStyleOptionComboBox opt;
+//        initStyleOption(&opt);
+//        painter.drawComplexControl(QStyle::CC_ComboBox, opt);
+//  
+//        QVariant itemData = this->itemData(this->currentIndex(), Qt::DisplayRole);
+//  
+//        if (!itemData.isNull() && qVariantCanConvert<QPen>(itemData)) {
+//          style()->drawItemText(
+//            &painter
+//            , this->rect()
+//            , Qt::AlignLeft
+//            , (this->palette())
+//            , true
+//            , itemData.toString());
+//        }
+  
+        return QHeaderView::paintEvent(event);
+      }
+    };
+  }
 #endif // _HEADERVIEW_HPP_
 

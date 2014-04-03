@@ -22,16 +22,22 @@
 #include "MainForm.hpp"
 #include "Application.hpp"
 #include "cashflow.hpp"
+#include "HeaderView.hpp"
 #include "ManageCategoriesForm.hpp"
 #include "ManageItemsForm.hpp"
 #include "DecimalFieldItemDelegate.hpp"
 #include "SqlTableModel.hpp"
 #include "TableView.hpp"
 
-#include "HeaderView.hpp"
-
 using Cashflow::Application;
 using Cashflow::Data;
+using Cashflow::DecimalFieldItemDelegate;
+using Cashflow::HeaderView;
+using Cashflow::MainForm;
+using Cashflow::ManageCategoriesForm;
+using Cashflow::ManageItemsForm;
+using Cashflow::SqlTableModel;
+using Cashflow::TableView;
 
 static const QString applicationTitle = "Cashflow";
 static const QString modifiedFileIndicator = "[*]";
