@@ -971,7 +971,6 @@ void MainForm::addPeriod() {
   int row = periodModel->rowCount();
   periodModel->insertRow(row);
 
-  // edit new period name
   QModelIndex periodNameIndex = periodModel->index(row, PeriodMetricsView_PeriodName);
   if (!periodNameIndex.isValid()) {
     QMessageBox::warning(
@@ -984,15 +983,20 @@ void MainForm::addPeriod() {
 
   if (isRunningOkay) {
     periodView->setCurrentIndex(periodNameIndex);
-    periodView->edit(periodNameIndex);
-    periodView->setFocus();
 
     // give the period id field a new id value
     QString periodId = qApp->getNewPeriodId();
 
     QModelIndex periodIdIndex =
       periodNameIndex.sibling(row, PeriodMetricsView_PeriodId);
+
     periodModel->setData(periodIdIndex, periodId, Qt::EditRole);
+
+    // setFocus will trigger a creation of the row
+    periodView->setFocus();
+    
+    // open the editor so the user can give the new period a name
+    periodView->edit(periodNameIndex);
   }
 }
 
@@ -1008,6 +1012,7 @@ void MainForm::clonePeriod() {
 
   // insert a period after the source period
   int row = sourcePeriodViewCurrent.row() + 1;
+
   periodModel->insertRow(row);
 
   // edit new period name
@@ -1025,8 +1030,6 @@ void MainForm::clonePeriod() {
 
   if (isRunningOkay) {
     periodView->setCurrentIndex(periodNameIndex);
-    periodView->edit(periodNameIndex);
-    periodView->setFocus();
 
     // give the period id field a new id value
     QString periodId = qApp->getNewPeriodId();
@@ -1074,6 +1077,9 @@ void MainForm::clonePeriod() {
       qApp->clonePeriodAs(sourcePeriodId, periodId);
 
       updateViewsAfterChange();
+
+      // setFocus back to the period view again
+      periodView->setFocus();
     }
   }
 }

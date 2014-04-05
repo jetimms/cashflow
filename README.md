@@ -152,6 +152,12 @@ What's broken in this version
 -----------------------------
 Saved files loose their undo-redo focus and look as if they are "redone" all the way. When saving a file, it should remove the extra redos.
 
+The following error occurs on undo/redo when involving adding or removing periods.
+```
+QAbstractItemModel::endRemoveRows:  Invalid index ( 0 , 1 ) in model Cashflow::S
+qlTableModel(0xc48938)
+```
+
 ```
 BadWindow error is occuring again. Its likely the progress bar is overflowing.
 >>>
@@ -169,6 +175,17 @@ X Error: BadWindow (invalid Window parameter) 3
 
 What's left to do
 -----------------
+Disable the editor from showing in read-only fields. Make it obvious to the user that the fields are read only.
+
+Make it easier to get started.
+  Make the first period easy to create or have one already created.
+
+  Start new periods with all items registered instead of unregistered.
+  
+  Create an action to unregister any unedited items.
+
+  Create an action to register all items.
+
 Allow customizing of styles and colors.
 
 Allow saving of preferences on close.
@@ -207,6 +224,11 @@ Move to Qt 5
 
 What's done
 -----------
+[Fixed in v0.27.2 on 20140404]
+After setting the editors to save data on a click-off or a tab-off event, the add period and clone period actions no longer worked. The problem was the focus was getting set to period view before the period was created.
+
+This fix moved the setFocus and edit functions to later in the MainForm::addPeriod and MainForm::clonePeriod methods.
+
 [Fixed in v0.27.2 on 20140403]
 The TableView editors were losing entered data if the user did not specifically hit the Enter key after changing an editable value. This fix will allow clicking off or Tabbing off of the row to have the data save.
 Inspired by Virgil Drupas (thanks!):
