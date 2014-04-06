@@ -1,11 +1,11 @@
 //  Copyright 2014 Jason Eric Timms
-// 
+//
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
 //    You may obtain a copy of the License at
-// 
+//
 //      http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 //    Unless required by applicable law or agreed to in writing, software
 //    distributed under the License is distributed on an "AS IS" BASIS,
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -13,7 +13,7 @@
 //    limitations under the License.
 //
 //  SqlTableModel.cpp
-//  Modifies to the QSqlTableModel class to help with field alignment and row 
+//  Modifies to the QSqlTableModel class to help with field alignment and row
 //  removal in the cashflow program.
 
 #include <QtGui>
@@ -70,4 +70,31 @@ bool SqlTableModel::removeRow(int row, const QModelIndex &parent) {
   emit dataSubmitted();
 
   return isRunningOkay;
+}
+
+Qt::ItemFlags SqlTableModel::flags(const QModelIndex & index) const {
+
+  Qt::ItemFlags defaultFlags = Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+  Qt::ItemFlags editFlags = defaultFlags | Qt::ItemIsEditable;
+  
+  Qt::ItemFlags decideFlags = defaultFlags;
+
+  if (tableName() == "periodMetricsView") {
+    if (index.column() == fieldIndex("PeriodName")) {
+      decideFlags = editFlags;
+    }
+  }
+  else 
+  if (tableName() == "registerMetricsView") {
+    if (index.column() == fieldIndex("Note")
+      || index.column() == fieldIndex("Budget")
+      || index.column() == fieldIndex("Actual"))
+    {
+      decideFlags = editFlags;
+    }
+  }
+
+  Qt::ItemFlags returnFlags = decideFlags;
+
+  return returnFlags;
 }

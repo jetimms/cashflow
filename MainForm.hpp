@@ -183,7 +183,7 @@
   
       void showEmptyToolBar();
       void showFileToolBar();
-  
+
   		SqlTableModel	*periodModel;
   		SqlTableModel	*flowModel;
   		SqlTableModel	*categoryModel;

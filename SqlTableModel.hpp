@@ -42,6 +42,9 @@
     
     signals:
       void dataSubmitted();
+
+    private:
+      Qt::ItemFlags flags(const QModelIndex & index) const;
     };
   }
 #endif // _SQLTABLEMODEL_HPP_
