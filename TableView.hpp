@@ -31,7 +31,7 @@
     protected:
       bool viewportEvent(QEvent *event);
       void keyPressEvent(QKeyEvent *event);
-  
+
     protected slots:
       void closeEditor(
         QWidget *editor, QAbstractItemDelegate::EndEditHint hint);

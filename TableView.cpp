@@ -21,8 +21,8 @@
 #include <QDebug>
 #include <QTableView>
 
-#include "TableView.hpp"
 #include "cashflow.hpp"
+#include "TableView.hpp"
 
 using Cashflow::TableView;
 

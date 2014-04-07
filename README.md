@@ -158,9 +158,8 @@ QAbstractItemModel::endRemoveRows:  Invalid index ( 0 , 1 ) in model Cashflow::S
 qlTableModel(0xc48938)
 ```
 
-```
 BadWindow error is occuring again. Its likely the progress bar is overflowing.
->>>
+```
 $ X Error: BadWindow (invalid Window parameter) 3
   Major opcode: 20 (X_GetProperty)
   Resource id:  0x1c1daa0
@@ -170,19 +169,15 @@ X Error: BadWindow (invalid Window parameter) 3
 X Error: BadWindow (invalid Window parameter) 3
   Major opcode: 40 (X_TranslateCoords)
   Resource id:  0x1c1daa0
-<<<
 ```
 
 What's left to do
 -----------------
-Make it easier to get started.
-  Make the first period easy to create or have one already created.
+Start new periods with all items registered instead of unregistered.
 
-  Start new periods with all items registered instead of unregistered.
-  
-  Create an action to unregister any unedited items.
+Create an action to unregister any unedited items.
 
-  Create an action to register all items.
+Create an action to register all items.
 
 Allow customizing of styles and colors.
 
@@ -222,6 +217,9 @@ Move to Qt 5
 
 What's done
 -----------
+[Fixed in v0.28.0 on 20140406]
+Make the first period easy to create or have one already created.
+
 [Fixed in v0.28.0 on 20140406]
 Make it obvious to the user that the fields are read only.
 

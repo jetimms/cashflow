@@ -94,7 +94,7 @@
   		void undo();
   		void redo();
   
-  		void addPeriod();
+  		void addPeriod(QString periodName = "");
   		void clonePeriod();
   		void deletePeriod();
   

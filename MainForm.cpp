@@ -731,6 +731,9 @@ void MainForm::newFile() {
       revertAction->setEnabled(false);
       undoAction->setEnabled(false);
       redoAction->setEnabled(false);
+
+      // add a period for the new file
+      addPeriod("initial period name");
     }
   }
 }
@@ -964,7 +967,7 @@ void MainForm::redo() {
   }
 }
 
-void MainForm::addPeriod() {
+void MainForm::addPeriod(QString periodName) {
   bool isRunningOkay = true;
 
   // go to the last row in the period view and insert a row after
@@ -992,11 +995,20 @@ void MainForm::addPeriod() {
 
     periodModel->setData(periodIdIndex, periodId, Qt::EditRole);
 
-    // setFocus will trigger a creation of the row
-    periodView->setFocus();
-    
-    // open the editor so the user can give the new period a name
-    periodView->edit(periodNameIndex);
+    if (periodName == "") {
+      // setFocus will trigger a creation of the row
+      periodView->setFocus();
+  
+      // open the editor so the user can give the new period a name
+      periodView->edit(periodNameIndex);
+    } else {
+      periodModel->setData(periodNameIndex, periodName, Qt::EditRole);
+
+      // not sure why, but these following two methods allow the above name to 
+      // go in and create the period with it
+      periodView->setFocus();
+      periodView->edit(periodNameIndex);
+    }
   }
 }
 
