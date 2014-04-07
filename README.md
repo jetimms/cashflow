@@ -175,10 +175,6 @@ X Error: BadWindow (invalid Window parameter) 3
 
 What's left to do
 -----------------
-Disable the editor from showing in read-only fields.
-
-Make it obvious to the user that the fields are read only.
-
 Make it easier to get started.
   Make the first period easy to create or have one already created.
 
@@ -227,9 +223,14 @@ Move to Qt 5
 What's done
 -----------
 [Fixed in v0.28.0 on 20140406]
+Make it obvious to the user that the fields are read only.
+
+I added Qt::BackgroundRole and Qt::ForegroundRole to the data() method of SqlTableModel with gray colors for the read-only columns.
+
+[Fixed in v0.28.0 on 20140406]
 Disable the editor from showing in read-only fields.
 
-I used the overrode the QSqlTableModel::flags method to ignore the read-only fields.
+I overrode the QSqlTableModel::flags method to ignore the read-only fields.
 
 [Fixed in v0.27.2 on 20140404]
 After setting the editors to save data on a click-off or a tab-off event, the add period and clone period actions no longer worked. The problem was the focus was getting set to period view before the period was created.

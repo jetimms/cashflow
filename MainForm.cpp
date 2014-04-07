@@ -48,7 +48,7 @@ MainForm::MainForm()
     , flowModel((SqlTableModel *)0)
     , categoryModel((SqlTableModel *)0)
     , registerModel((SqlTableModel *)0)
-    , unusedModel((QSqlRelationalTableModel *)0)
+    , unusedModel((SqlTableModel *)0)
     , periodView((TableView *)0)
     , flowView((TableView *)0)
     , categoryView((TableView *)0)
@@ -1621,7 +1621,7 @@ void MainForm::createRegisterPanel() {
 }
 
 void MainForm::createUnusedPanel() {
-  unusedModel = new QSqlRelationalTableModel(this);
+  unusedModel = new SqlTableModel(this);
   unusedModel->setTable("unusedMetricsView");
   unusedModel->setSort(
     UnusedMetricsView_ItemName, Qt::AscendingOrder);
@@ -1639,6 +1639,7 @@ void MainForm::createUnusedPanel() {
   unusedView = new TableView(this);
   unusedView->setModel(unusedModel);
   unusedView->setItemDelegate(new QSqlRelationalDelegate(this));
+
   unusedView->setSelectionMode(QAbstractItemView::SingleSelection);
   unusedView->setSelectionBehavior(QAbstractItemView::SelectRows);
   unusedView->setEditTriggers(QAbstractItemView::NoEditTriggers);

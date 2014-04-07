@@ -32,11 +32,11 @@ SqlTableModel::SqlTableModel(
 }
 
 QVariant SqlTableModel::data(const QModelIndex &index, int role) const {
+  QString fieldName =
+    headerData(index.column(), Qt::Horizontal, Qt::DisplayRole).toString();
+
   // if the alignment role, right-align for numbers
   if (role == Qt::TextAlignmentRole) {
-    QString fieldName =
-      headerData(index.column(), Qt::Horizontal, Qt::DisplayRole).toString();
-
     if (fieldName == "Budget"
         || fieldName == "Actual"
         || fieldName == "Difference"
@@ -44,6 +44,50 @@ QVariant SqlTableModel::data(const QModelIndex &index, int role) const {
         || fieldName == "Actual Balance"
         || fieldName == "Difference Balance") {
       return (int)(Qt::AlignRight | Qt::AlignVCenter);
+    }
+  }
+  else if (role == Qt::BackgroundRole) {
+    if (
+      tableName() != "periodMetricsView"
+      && tableName() != "registerMetricsView")
+    {
+      return QVariant(QColor(224, 224, 224));
+    }
+    else if (tableName() == "periodMetricsView") {
+      if (fieldName != "Period") {
+        return QVariant(QColor(224, 224, 224));
+      }
+    }
+    else if (tableName() == "registerMetricsView") {
+      if (
+        fieldName != "Note"
+        && fieldName != "Budget"
+        && fieldName != "Actual")
+      {
+        return QVariant(QColor(224, 224, 224));
+      }
+    }
+  }
+  else if (role == Qt::ForegroundRole) {
+    if (
+      tableName() != "periodMetricsView"
+      && tableName() != "registerMetricsView")
+    {
+      return QVariant(QColor(42, 42, 42));
+    }
+    else if (tableName() == "periodMetricsView") {
+      if (fieldName != "Period") {
+        return QVariant(QColor(42, 42, 42));
+      }
+    }
+    else if (tableName() == "registerMetricsView") {
+      if (
+        fieldName != "Note"
+        && fieldName != "Budget"
+        && fieldName != "Actual")
+      {
+        return QVariant(QColor(42, 42, 42));
+      }
     }
   }
 

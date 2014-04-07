@@ -188,7 +188,7 @@
   		SqlTableModel	*flowModel;
   		SqlTableModel	*categoryModel;
   		SqlTableModel	*registerModel;
-  		QSqlRelationalTableModel *unusedModel;
+  		SqlTableModel	*unusedModel;
   
   		QTableView *periodView;
   		QTableView *flowView;
