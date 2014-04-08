@@ -21,11 +21,11 @@
   
   const QString VERSION = "0.28.0";
 	const QString ABOUT_NAME_AND_VERSION =
-		"<h1>cashflow v" + VERSION + "</h1>";
+		"<h1>Cashflow v" + VERSION + "</h1>";
   const QString ABOUT_COPYRIGHT_TEXT =
 		"<p>Copyright &copy; 2014 Jason Eric Timms</p>";
   const QString ABOUT_APP_DESCRIPTION =
-    "<p>cashflow is a zero-sum budget program.</p>";
+    "<p>Cashflow is a zero-sum budget program.</p>";
   
   const int INITIAL_WIDTH_BLANK = 200;
   const int INITIAL_HEIGHT_BLANK = 40;

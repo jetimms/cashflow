@@ -26,8 +26,9 @@
 using Cashflow::SqlTableModel;
 
 SqlTableModel::SqlTableModel(
-    QObject *parent, QSqlDatabase db)
-    : QSqlTableModel(parent, db) {
+  QObject *parent, QSqlDatabase db)
+  : QSqlTableModel(parent, db)
+{
   // intentionally empty function
 }
 

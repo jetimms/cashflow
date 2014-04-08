@@ -1129,11 +1129,19 @@ void MainForm::deletePeriod() {
 void MainForm::registerItem() {
   bool isRunningOkay = true;
 
+  if (periodModel->rowCount() == 0) {
+    isRunningOkay = false;
+  }
+
   if (unusedModel->rowCount() == 0) {
     isRunningOkay = false;
   }
 
-  QModelIndex unusedModelItemName;
+  if (periodView->currentIndex() == QModelIndex()) {
+    isRunningOkay = false;
+  }
+
+  QModelIndex unusedModelItemName = QModelIndex();
   int newRegisterRow = -1;
 
   if (isRunningOkay) {
@@ -1190,6 +1198,11 @@ void MainForm::registerItem() {
 
     // give the item id field the current unused item value
     QModelIndex unusedViewCurrent = unusedView->currentIndex();
+
+    // if no cell or row has been selected in the unregistered item view
+    if (unusedViewCurrent == QModelIndex()) {
+      unusedViewCurrent = unusedView->indexAt(QPoint(0, 0));
+    }
 
     // save the row in the unused view for later
     int newUnusedViewRow = unusedViewCurrent.row();
@@ -1263,12 +1276,14 @@ void MainForm::registerItem() {
       isRunningOkay = false;
     }
   }
-
-  updateViewsAfterChange();
-
-  // set the focus back to the unused item view
-  unusedView->setFocus();
-  unusedView->setCurrentIndex(unusedModelItemName);
+    
+  if (isRunningOkay) {
+    updateViewsAfterChange();
+  
+    // set the focus back to the unused item view
+    unusedView->setFocus();
+    unusedView->setCurrentIndex(unusedModelItemName);
+  }
 }
 
 void MainForm::unregisterItem() {
@@ -1835,6 +1850,19 @@ void MainForm::about() {
     ABOUT_NAME_AND_VERSION
     + ABOUT_COPYRIGHT_TEXT
     + ABOUT_APP_DESCRIPTION;
+
+  QFile file("./LICENSE.TXT");
+  QStringList strings;
+
+  if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+    QTextStream in(&file);
+    while (!in.atEnd()) {
+      strings += in.readLine().split(";"); 
+    }
+  }
+
+  aboutText +=
+    "<p>" + strings.join("</p><p>") + "</p>";
 
   QMessageBox::about(
     this

@@ -10,13 +10,14 @@ F2 edits! Enter saves!
 
 Steps:
 
-1. add a period and edit the name
-2. register previously unregistered items to fill in. In flows are income (positive to the balance) and out flows are expenses (negative to the balance)
-3. edit the registered item's note, budget or actual fields
-4. repeat Steps 2 and 3 until you balance the period budget and actuals to zero (ie. Ins = Outs).
+0. Create a new file.
+1. Add a period and change the period's name to something preferable.
+2. Register previously unregistered items to fill in. In flows are income (positive to the balance) and out flows are expenses (negative to the balance)
+3. Edit the registered item's note, budget or actual fields.
+4. Repeat Steps 2 and 3 until you balance the period budget and actuals to zero (ie. Ins = Outs).
 
 
-This version is in old UI application style, menu based. Its mainly written with keyboard enthusiasts in mind, so no context menus either (not that those are new.) You can click on fields to edit them, although only the intended ones will allow editing.
+This version is in old UI application style, menu based. Its mainly written with keyboard enthusiasts in mind, so no context menus either (not that those are new.) You can double click on fields to edit them, although only the intended ones will allow editing.
 
 The register shows the metrics, or live data, the budget and actuals. Press F2 to edit registered budget or actual amounts or to alter or enter a new value for periods in the period docked window.
 
@@ -217,6 +218,18 @@ Move to Qt 5
 
 What's done
 -----------
+[Fixed in v0.28.0 on 20140407]
+When the register item action is activated, if a period is selected and there are unregistered items but none selected in the unregistered items view, the program would return an error.
+
+The fixed behaviour is to select the top unregistered item and register it for that period.
+
+If the period was not selected or if there are no periods, there would also be an error.
+
+The action expires now, if no period is selected or if none exist.
+
+[Done in v0.28.0 on 20140407]
+I condensed the LICENSE.TXT file and included it in the Help/About dialog text.
+
 [Fixed in v0.28.0 on 20140406]
 Make the first period easy to create or have one already created.
 
