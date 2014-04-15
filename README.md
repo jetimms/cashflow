@@ -176,10 +176,6 @@ What's left to do
 -----------------
 Start new periods with all items registered instead of unregistered.
 
-Create an action to unregister any unedited items.
-
-Create an action to register all items.
-
 Allow customizing of styles and colors.
 
 Allow saving of preferences on close.
@@ -218,6 +214,12 @@ Move to Qt 5
 
 What's done
 -----------
+[Done in v0.28.0 on 20140414]
+Create an action to unregister any unedited items.
+Create an action to register all items.
+
+Made the same fix as below, but with unregistering without a registered item selected.
+
 [Fixed in v0.28.0 on 20140407]
 When the register item action is activated, if a period is selected and there are unregistered items but none selected in the unregistered items view, the program would return an error.
 

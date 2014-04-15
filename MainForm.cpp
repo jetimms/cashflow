@@ -75,7 +75,7 @@ MainForm::MainForm()
     , openButton((QPushButton *)0)
     , exitButton((QPushButton *)0)
     , emptyButtonBox((QDialogButtonBox *)0)
-    , mappingChanged(false) {
+    , mappingChangedFlag(false) {
 
   createActions();
   setupEmpty();
@@ -495,6 +495,17 @@ void MainForm::createEditActions() {
     , this
     , SLOT(registerItem()));
 
+  registerAllItemsAction = new QAction(tr("&Register All Items"), this);
+//  registerAllItemsAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 8/6.png"));
+  registerAllItemsAction->setShortcut(tr("Ctrl+Shift+R"));
+  registerAllItemsAction->setStatusTip(
+    tr("Register all unused items"));
+  connect(
+    registerAllItemsAction
+    , SIGNAL(triggered())
+    , this
+    , SLOT(registerAllUnregisteredItems()));
+
   unregisterItemAction = new QAction(tr("&Unregister Item"), this);
   unregisterItemAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 8/7.png"));
   unregisterItemAction->setShortcut(tr("Ctrl+U"));
@@ -505,6 +516,17 @@ void MainForm::createEditActions() {
     , SIGNAL(triggered())
     , this
     , SLOT(unregisterItem()));
+    
+  unregisterAllItemsAction = new QAction(tr("&Unregister All Items"), this);
+//  unregisterAllItemsAction->setIcon(QIcon(imagePathSmashing_gemicons + "/row 8/6.png"));
+  unregisterAllItemsAction->setShortcut(tr("Ctrl+Shift+U"));
+  unregisterAllItemsAction->setStatusTip(
+    tr("Register all unused items"));
+  connect(
+    unregisterAllItemsAction
+    , SIGNAL(triggered())
+    , this
+    , SLOT(unregisterAllRegisteredItems()));
 }
 
 void MainForm::createViewActions() {
@@ -608,7 +630,9 @@ void MainForm::createMenus() {
   editMenu->addAction(deletePeriodAction);
   editMenu->addSeparator();
   editMenu->addAction(registerItemAction);
+  editMenu->addAction(registerAllItemsAction);
   editMenu->addAction(unregisterItemAction);
+  editMenu->addAction(unregisterAllItemsAction);
 
   viewMenu = menuBar()->addMenu(tr("&View"));
   viewMenu->addAction(toggleShowPeriodAction);
@@ -995,18 +1019,16 @@ void MainForm::addPeriod(QString periodName) {
 
     periodModel->setData(periodIdIndex, periodId, Qt::EditRole);
 
-    if (periodName == "") {
+    if (periodName != "") {
+      periodModel->setData(periodNameIndex, periodName, Qt::EditRole);
+    } else {
+      // not sure why, but these following two methods allow the above name to
+      // go in and create the period with it
+
       // setFocus will trigger a creation of the row
       periodView->setFocus();
-  
-      // open the editor so the user can give the new period a name
-      periodView->edit(periodNameIndex);
-    } else {
-      periodModel->setData(periodNameIndex, periodName, Qt::EditRole);
 
-      // not sure why, but these following two methods allow the above name to 
-      // go in and create the period with it
-      periodView->setFocus();
+      // open the editor so the user can give the new period a name
       periodView->edit(periodNameIndex);
     }
   }
@@ -1040,11 +1062,13 @@ void MainForm::clonePeriod() {
     isRunningOkay = false;
   }
 
+  QString periodId = "";
+
   if (isRunningOkay) {
     periodView->setCurrentIndex(periodNameIndex);
 
     // give the period id field a new id value
-    QString periodId = qApp->getNewPeriodId();
+    periodId = qApp->getNewPeriodId();
 
     QModelIndex periodIdIndex =
       periodNameIndex.sibling(row, PeriodMetricsView_PeriodId);
@@ -1083,16 +1107,16 @@ void MainForm::clonePeriod() {
 
       isRunningOkay = false;
     }
+  }
 
-    if (isRunningOkay) {
-      // clone the data
-      qApp->clonePeriodAs(sourcePeriodId, periodId);
+  if (isRunningOkay) {
+    // clone the data
+    qApp->clonePeriodAs(sourcePeriodId, periodId);
 
-      updateViewsAfterChange();
+    updateViewsAfterChange();
 
-      // setFocus back to the period view again
-      periodView->setFocus();
-    }
+    // setFocus back to the period view again
+    periodView->setFocus();
   }
 }
 
@@ -1201,6 +1225,7 @@ void MainForm::registerItem() {
 
     // if no cell or row has been selected in the unregistered item view
     if (unusedViewCurrent == QModelIndex()) {
+      // select first unused item
       unusedViewCurrent = unusedView->indexAt(QPoint(0, 0));
     }
 
@@ -1276,43 +1301,43 @@ void MainForm::registerItem() {
       isRunningOkay = false;
     }
   }
-    
+
   if (isRunningOkay) {
     updateViewsAfterChange();
-  
+
     // set the focus back to the unused item view
     unusedView->setFocus();
     unusedView->setCurrentIndex(unusedModelItemName);
   }
 }
 
-void MainForm::unregisterItem() {
+void MainForm::unregisterItem(int itemRow) {
   bool isRunningOkay = true;
 
-  QModelIndex index = registerView->currentIndex();
-  if (!index.isValid()) {
-    QMessageBox::warning(
-      (QWidget *)0
-      , QObject::tr("Error: Row not valid.")
-      , QObject::tr("The register row is not valid."));
-
+  if (periodModel->rowCount() == 0) {
     isRunningOkay = false;
   }
 
-  int row;
+  if (registerModel->rowCount() == 0) {
+    isRunningOkay = false;
+  }
 
+  if (periodView->currentIndex() == QModelIndex()) {
+    isRunningOkay = false;
+  }
+
+  QModelIndex index = QModelIndex();
+  
   if (isRunningOkay) {
-    row = index.row();
-
+    index = registerView->currentIndex();
+    
     if (!index.isValid()) {
-      QMessageBox::warning(
-        (QWidget *)0
-        , QObject::tr("Error: Index not valid.")
-        , QObject::tr("The register view index is not valid."));
-
-      isRunningOkay = false;
+      // select first unused item
+      index = registerView->indexAt(QPoint(0, 0));
     }
   }
+
+  int row = (itemRow == -1) ? index.row() : itemRow;
 
   if (isRunningOkay) {
     // get register record from the model at given row
@@ -1476,7 +1501,7 @@ void MainForm::createPeriodPanel() {
     , this
     , SLOT(updatePeriodView()));
 
-  periodLayout = new QHBoxLayout;
+  periodLayout = new QVBoxLayout;
   periodLayout->addWidget(periodView);
 
   periodPanel = new QWidget;
@@ -1778,7 +1803,6 @@ void MainForm::setFlowRestriction() {
 
   QString modelFilterLabel =
     (periodModelFilterLabel != "" ? tr(" for ") + periodModelFilterLabel : "");
-//  flowLabel->setText(tr("F&low") + modelFilterLabel);
 
   flowView->horizontalHeader()->setVisible(flowModel->rowCount() > 0);
 }
@@ -1857,7 +1881,7 @@ void MainForm::about() {
   if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
     QTextStream in(&file);
     while (!in.atEnd()) {
-      strings += in.readLine().split(";"); 
+      strings += in.readLine().split(";");
     }
   }
 
@@ -2034,15 +2058,15 @@ void MainForm::unusedViewHeaderClicked(int logicalIndex) {
 }
 
 void MainForm::setMappingChanged() {
-  mappingChanged = true;
+  mappingChangedFlag = true;
 }
 
 void MainForm::resetMappingChanged() {
-  mappingChanged = false;
+  mappingChangedFlag = false;
 }
 
 bool MainForm::getMappingChanged() const {
-  return mappingChanged;
+  return mappingChangedFlag;
 }
 
 void MainForm::writeSettings() const {
@@ -2189,4 +2213,93 @@ void MainForm::showFileToolBar() {
   fileToolBar->setVisible(true);
   editToolBar->setVisible(true);
   viewToolBar->setVisible(true);
+}
+
+void MainForm::registerAllUnregisteredItems() {
+  QModelIndex modelIndex = periodView->currentIndex();
+
+  if (modelIndex != QModelIndex()) {
+    QModelIndex periodIdIndex =
+      periodModel->index(modelIndex.row(), PeriodMetricsView_PeriodId);
+  
+    if (!periodIdIndex.isValid()) {
+      QMessageBox::warning(
+        (QWidget *)0
+        , QObject::tr("Error: Row not valid.")
+        , QObject::tr("The period row is not valid."));
+    } else {
+      periodView->setFocus();
+  
+      quint32 totalUnusedItems = unusedModel->rowCount();
+  
+      QProgressDialog progress(
+        "Registering All Items...", "Cancel", 0, totalUnusedItems, this);
+  
+      progress.setWindowModality(Qt::WindowModal);
+  
+      quint32 itemsLeftToConsider = unusedModel->rowCount();
+  
+      while (itemsLeftToConsider > 0) {
+        progress.setValue(totalUnusedItems - unusedModel->rowCount());
+  
+        if (progress.wasCanceled())
+          break;
+  
+        registerItem();
+
+        itemsLeftToConsider--;
+      }
+  
+      progress.setValue(registerModel->rowCount());
+
+      unusedPanel->hide();
+
+      registerView->setFocus();
+    }
+  }
+}
+
+void MainForm::unregisterAllRegisteredItems() {
+  QModelIndex modelIndex = periodView->currentIndex();
+
+  if (modelIndex != QModelIndex()) {
+    QModelIndex periodIdIndex =
+      periodModel->index(modelIndex.row(), PeriodMetricsView_PeriodId);
+  
+    if (!periodIdIndex.isValid()) {
+      QMessageBox::warning(
+        (QWidget *)0
+        , QObject::tr("Error: Row not valid.")
+        , QObject::tr("The period row is not valid."));
+    } else {
+      unusedPanel->show();
+
+      periodView->setFocus();
+  
+      int totalRegisteredItems = registerModel->rowCount();
+  
+      QProgressDialog progress(
+        "Unregistering All Items...", "Cancel", 0, totalRegisteredItems, this);
+  
+      progress.setWindowModality(Qt::WindowModal);
+
+      for (
+        int itemIndex = 0;
+        itemIndex < totalRegisteredItems;
+        ++itemIndex)
+      {
+        progress.setValue(itemIndex + 1);
+  
+        if (progress.wasCanceled())
+          break;
+  
+        unregisterItem(
+          itemIndex - totalRegisteredItems + registerModel->rowCount());
+      }
+  
+      progress.setValue(totalRegisteredItems);
+
+      unusedView->setFocus();
+    }
+  }
 }
