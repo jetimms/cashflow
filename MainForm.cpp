@@ -1349,16 +1349,21 @@ void MainForm::unregisterItem(int itemRow) {
     QSqlRecord periodRecord = periodModel->record(periodViewIndex.row());
     QString periodName = periodRecord.value("periodName").toString();
 
-    // show warning if budget or actual values are non-zero (or > 0.01)
+    // show warning if record has been changed
     double budget = registerRecord.value("budget").toDouble();
     double actual = registerRecord.value("actual").toDouble();
+    QString note = registerRecord.value("note").toString();
 
-    if (abs(budget) >= 0.01 || abs(actual) >= 0.01) {
+    if (
+      abs(budget) >= 0.01 
+      || abs(actual) >= 0.01
+      || note != "")
+    {
       int r =
         QMessageBox::warning(
           this
           , tr("Unregister Entry")
-          , tr("Unregister %1 for Period %2? It contains non-zero values.")
+          , tr("Unregister %1 for Period %2? It contains changed values.")
             .arg(itemName)
             .arg(periodName)
           , QMessageBox::Yes | QMessageBox::No);

@@ -50,7 +50,11 @@ QVariant SqlTableModel::data(const QModelIndex &index, int role) const {
   else if (role == Qt::BackgroundRole) {
     if (
       tableName() != "periodMetricsView"
-      && tableName() != "registerMetricsView")
+      && tableName() != "registerMetricsView"
+      && tableName() != "inCategoryMapView"
+      && tableName() != "outCategoryMapView"
+      && tableName() != "categoryMapView"
+      && tableName() != "itemMapView")
     {
       return QVariant(QColor(224, 224, 224));
     }
@@ -68,11 +72,35 @@ QVariant SqlTableModel::data(const QModelIndex &index, int role) const {
         return QVariant(QColor(224, 224, 224));
       }
     }
+    else if (tableName() == "inCategoryMapView") {
+      if (fieldName != "Category") {
+        return QVariant(QColor(224, 224, 224));
+      }
+    }
+    else if (tableName() == "outCategoryMapView") {
+      if (fieldName != "Category") {
+        return QVariant(QColor(224, 224, 224));
+      }
+    }
+    else if (tableName() == "categoryMapView") {
+      if (fieldName != "Category") {
+        return QVariant(QColor(224, 224, 224));
+      }
+    }
+    else if (tableName() == "itemMapView") {
+      if (fieldName != "Item") {
+        return QVariant(QColor(224, 224, 224));
+      }
+    }
   }
   else if (role == Qt::ForegroundRole) {
     if (
       tableName() != "periodMetricsView"
-      && tableName() != "registerMetricsView")
+      && tableName() != "registerMetricsView"
+      && tableName() != "inCategoryMapView"
+      && tableName() != "outCategoryMapView"
+      && tableName() != "categoryMapView"
+      && tableName() != "itemMapView")
     {
       return QVariant(QColor(42, 42, 42));
     }
@@ -87,6 +115,26 @@ QVariant SqlTableModel::data(const QModelIndex &index, int role) const {
         && fieldName != "Budget"
         && fieldName != "Actual")
       {
+        return QVariant(QColor(42, 42, 42));
+      }
+    }
+    else if (tableName() == "inCategoryMapView") {
+      if (fieldName != "Category") {
+        return QVariant(QColor(42, 42, 42));
+      }
+    }
+    else if (tableName() == "outCategoryMapView") {
+      if (fieldName != "Category") {
+        return QVariant(QColor(42, 42, 42));
+      }
+    }
+    else if (tableName() == "categoryMapView") {
+      if (fieldName != "Category") {
+        return QVariant(QColor(42, 42, 42));
+      }
+    }
+    else if (tableName() == "itemMapView") {
+      if (fieldName != "Item") {
         return QVariant(QColor(42, 42, 42));
       }
     }
@@ -129,12 +177,31 @@ Qt::ItemFlags SqlTableModel::flags(const QModelIndex & index) const {
       decideFlags = editFlags;
     }
   }
-  else 
-  if (tableName() == "registerMetricsView") {
+  else if (tableName() == "registerMetricsView") {
     if (index.column() == fieldIndex("Note")
       || index.column() == fieldIndex("Budget")
       || index.column() == fieldIndex("Actual"))
     {
+      decideFlags = editFlags;
+    }
+  }
+  else if (tableName() == "inCategoryMapView") {
+    if (index.column() == fieldIndex("CategoryName")) {
+      decideFlags = editFlags;
+    }
+  }
+  else if (tableName() == "outCategoryMapView") {
+    if (index.column() == fieldIndex("CategoryName")) {
+      decideFlags = editFlags;
+    }
+  }
+  else if (tableName() == "categoryMapView") {
+    if (index.column() == fieldIndex("CategoryName")) {
+      decideFlags = editFlags;
+    }
+  }
+  else if (tableName() == "itemMapView") {
+    if (index.column() == fieldIndex("ItemName")) {
       decideFlags = editFlags;
     }
   }

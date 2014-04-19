@@ -214,6 +214,11 @@ Move to Qt 5
 
 What's done
 -----------
+[Done in v0.28.1 on 20140414]
+Fixed Unregister Items action to prompt 'are you sure?' dialog if it has a changed Note value, like it was doing with altered budget and actual values.
+
+Fixed manage category and manage items dialogs to allow altering the category and items fields.
+
 [Done in v0.28.0 on 20140414]
 Create an action to unregister any unedited items.
 Create an action to register all items.
