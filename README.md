@@ -2,7 +2,7 @@ cashflow
 ========
 Zero-sum budgeting tool for the desktop
 
-Version 0.28.0
+Version 0.28.1
 
 Quick how-to
 ------------
