@@ -2,7 +2,7 @@ cashflow
 ========
 Zero-sum budgeting tool for the desktop
 
-Version 0.28.1
+Version 0.29.0
 
 Quick how-to
 ------------
@@ -214,7 +214,10 @@ Move to Qt 5
 
 What's done
 -----------
-[Done in v0.28.1 on 20140414]
+[Done in v0.29.0 on 20140414]
+Stopped allowing negative budget and actual values and set budget values to be at least as high as the actual values for the same item.
+
+[Fixed in v0.28.1 on 20140414]
 Fixed Unregister Items action to prompt 'are you sure?' dialog if it has a changed Note value, like it was doing with altered budget and actual values.
 
 Fixed manage category and manage items dialogs to allow altering the category and items fields.

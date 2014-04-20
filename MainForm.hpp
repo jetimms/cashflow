@@ -136,6 +136,8 @@
       void registerAllUnregisteredItems();
       void unregisterAllRegisteredItems();
 
+      void validateRegisterModelMetrics(int, QSqlRecord &);
+
   	private:
   		bool okToContinue();
   		void addCurrentFileToRecentList();

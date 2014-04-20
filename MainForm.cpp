@@ -1641,6 +1641,12 @@ void MainForm::createRegisterPanel() {
   registerModel->setEditStrategy(QSqlTableModel::OnRowChange);
   registerModel->select();
 
+  connect(
+    registerModel
+    , SIGNAL(beforeUpdate(int, QSqlRecord &))
+    , this
+    , SLOT(validateRegisterModelMetrics(int, QSqlRecord &)));
+
   registerView = new TableView(this);
   registerView->setModel(registerModel);
   registerView->setItemDelegate(new QSqlRelationalDelegate(this));
@@ -2306,5 +2312,63 @@ void MainForm::unregisterAllRegisteredItems() {
 
       unusedView->setFocus();
     }
+  }
+}
+
+void MainForm::validateRegisterModelMetrics(
+  int row
+  , QSqlRecord & registerRecord)
+{
+  double budget = registerRecord.value("budget").toDouble();
+  double actual = registerRecord.value("actual").toDouble();
+
+  // if the budget value wasn't updated, grab it from the record
+  if (!registerRecord.isGenerated("budget")) {
+    QSqlRecord registerRecord = registerModel->record(row);
+    budget = registerRecord.value("budget").toDouble();
+  }
+
+  // if the actual value wasn't updated, grab it from the record
+  if (!registerRecord.isGenerated("actual")) {
+    QSqlRecord registerRecord = registerModel->record(row);
+    actual = registerRecord.value("actual").toDouble();
+  }
+
+  QString rules = 
+    QObject::tr(
+    "The budget and actual values are positive (or zero) and the actual value "
+    "cannot exceed budget value, ie. you must budget for what you actually "
+    "spend."
+    "\n\n"
+    "The value(s) will be corrected for you.");
+
+  bool correctionNeeded = false;
+
+  if (budget < 0) {
+    correctionNeeded = true;
+    
+    budget = 0;
+    registerRecord.setValue("budget", budget);
+     registerRecord.setGenerated("budget", true);
+  }
+
+  if (actual < 0) {
+    correctionNeeded = true;
+
+    actual = 0;
+    registerRecord.setValue("actual", actual);
+    registerRecord.setGenerated("actual", true);
+  }
+  
+  if (budget < actual) {
+    correctionNeeded = true;
+
+    budget = actual;
+    registerRecord.setValue("budget", budget);
+    registerRecord.setGenerated("budget", true);
+  }
+
+  if (correctionNeeded) {
+    QMessageBox::information(this, QObject::tr("Validation Rules"), rules);
   }
 }
