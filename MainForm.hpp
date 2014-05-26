@@ -21,6 +21,7 @@
 	#include <QMainWindow>
 	#include <QSqlRelationalTableModel>
 	#include <QTableView>
+
 	#include "SqlTableModel.hpp"
 
 	class	QAction;
@@ -30,6 +31,7 @@
 	class	QHBoxLayout;
 	class	QLabel;
 	class	QMenu;
+	class	QMessageBox;
 	class	QModelIndex;
 	class	QPushButton;
 	class	QShortcut;
@@ -300,6 +302,8 @@
       QToolBar *viewToolBar;
 
       QComboBox *recentFilesComboBox;
+      
+      quint32 unregisterChangedChoice;
   	};
   }
 #endif //	_MAINFORM_HPP_

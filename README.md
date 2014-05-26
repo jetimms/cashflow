@@ -2,7 +2,7 @@ cashflow
 ========
 Zero-sum budgeting tool for the desktop
 
-Version 0.29.0
+Version 0.30.0
 
 Quick how-to
 ------------
@@ -174,11 +174,29 @@ X Error: BadWindow (invalid Window parameter) 3
 
 What's left to do
 -----------------
+Stop manage category/item windows from closing on Enter being pressed.
+
 Start new periods with all items registered instead of unregistered.
+
+Create a preferences window.
+  Contains:
+  Allow bad amounts warning dialog to be turned off.
+  Allow other errors to be turned off.
+  Allow choice of color themes.
+  Allow versions of files to be saved.
+  Allow auto-save to be turned on.
+
+Add help to the Help menu.
+
+Add some type of notification if budget is out of balance.
+
+Add Export of data to a text file.
+
+Add Import of data from a text file.
 
 Allow customizing of styles and colors.
 
-Allow saving of preferences on close.
+Allow manual saving of preferences on close.
 
 Add a filter on each window for the editable views.
 
@@ -214,6 +232,9 @@ Move to Qt 5
 
 What's done
 -----------
+[Done in v0.30.0 on 20140526]
+Added a 'Yes To All' and 'No To All'
+
 [Done in v0.29.0 on 20140414]
 Stopped allowing negative budget and actual values and set budget values to be at least as high as the actual values for the same item.
 

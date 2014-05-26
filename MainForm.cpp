@@ -19,13 +19,14 @@
 #include <QtSql>
 #include <QDebug>
 
-#include "MainForm.hpp"
-#include "Application.hpp"
 #include "cashflow.hpp"
+#include "MainForm.hpp"
+
+#include "Application.hpp"
+#include "DecimalFieldItemDelegate.hpp"
 #include "HeaderView.hpp"
 #include "ManageCategoriesForm.hpp"
 #include "ManageItemsForm.hpp"
-#include "DecimalFieldItemDelegate.hpp"
 #include "SqlTableModel.hpp"
 #include "TableView.hpp"
 
@@ -1021,16 +1022,16 @@ void MainForm::addPeriod(QString periodName) {
 
     if (periodName != "") {
       periodModel->setData(periodNameIndex, periodName, Qt::EditRole);
-    } else {
-      // not sure why, but these following two methods allow the above name to
-      // go in and create the period with it
-
-      // setFocus will trigger a creation of the row
-      periodView->setFocus();
-
-      // open the editor so the user can give the new period a name
-      periodView->edit(periodNameIndex);
     }
+
+    // not sure why, but these following two methods allow the above name to
+    // go in and create the period with it
+
+    // setFocus will trigger a creation of the row
+    periodView->setFocus();
+
+    // open the editor so the user can give the new period a name
+    periodView->edit(periodNameIndex);
   }
 }
 
@@ -1339,6 +1340,7 @@ void MainForm::unregisterItem(int itemRow) {
 
   int row = (itemRow == -1) ? index.row() : itemRow;
 
+  // check for unregistering changed values
   if (isRunningOkay) {
     // get register record from the model at given row
     QSqlRecord registerRecord = registerModel->record(row);
@@ -1359,20 +1361,37 @@ void MainForm::unregisterItem(int itemRow) {
       || abs(actual) >= 0.01
       || note != "")
     {
-      int r =
-        QMessageBox::warning(
-          this
-          , tr("Unregister Entry")
-          , tr("Unregister %1 for Period %2? It contains changed values.")
-            .arg(itemName)
-            .arg(periodName)
-          , QMessageBox::Yes | QMessageBox::No);
-
-      if (r == QMessageBox::No) {
+      if (unregisterChangedChoice == QMessageBox::NoToAll) {
         isRunningOkay = false;
+      }
+      else if (unregisterChangedChoice != QMessageBox::YesToAll) {
+        unregisterChangedChoice =
+          QMessageBox::warning(
+            this
+            , tr("Unregister Entry")
+            , tr("Unregister %1 for Period %2? It contains changed values.")
+              .arg(itemName)
+              .arg(periodName)
+            , QMessageBox::Yes 
+              | QMessageBox::No 
+              | QMessageBox::YesToAll
+              | QMessageBox::NoToAll);
+      }
+          
+      if (unregisterChangedChoice == QMessageBox::No
+        || unregisterChangedChoice == QMessageBox::NoToAll)
+      {
+        isRunningOkay = false;
+      }
+
+      if (unregisterChangedChoice == QMessageBox::No
+        || unregisterChangedChoice == QMessageBox::Yes)
+      {
+        unregisterChangedChoice = QMessageBox::NoButton;
       }
     }
   }
+
 
   if (isRunningOkay
       && !registerModel->removeRow(row)) {
@@ -1443,7 +1462,8 @@ void MainForm::manageItems() {
     &form, SIGNAL(mappingChanged())
     , this, SLOT(setMappingChanged()));
 
-  form.exec();
+//  form.exec();
+  form.show();
 
   disconnect(
     &form, SIGNAL(mappingChanged())
@@ -2294,6 +2314,8 @@ void MainForm::unregisterAllRegisteredItems() {
   
       progress.setWindowModality(Qt::WindowModal);
 
+      unregisterChangedChoice = QMessageBox::NoButton;
+
       for (
         int itemIndex = 0;
         itemIndex < totalRegisteredItems;
@@ -2307,7 +2329,9 @@ void MainForm::unregisterAllRegisteredItems() {
         unregisterItem(
           itemIndex - totalRegisteredItems + registerModel->rowCount());
       }
-  
+
+      unregisterChangedChoice = QMessageBox::NoButton;
+
       progress.setValue(totalRegisteredItems);
 
       unusedView->setFocus();
