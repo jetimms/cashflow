@@ -2,7 +2,7 @@ cashflow
 ========
 Zero-sum budgeting tool for the desktop
 
-Version 0.30.1
+Version 0.30.2
 
 Quick how-to
 ------------
@@ -232,6 +232,9 @@ Move to Qt 5
 
 What's done
 -----------
+[Fixed in v0.30.2 on 20140527]
+The "Manage Items" window was not staying up. I fixed it by using the form.exec() method (which was commented out) instead of the form.show() function.
+
 [Done in v0.30.1 on 20140526]
 I added 'Cancel' as an optional button to to "Unregister All" action. It will stop the process, but not back out any unregistered items made already by the process.
 

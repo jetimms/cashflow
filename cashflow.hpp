@@ -19,7 +19,7 @@
   #define _CASHFLOW_HPP_
   #include <QString>
   
-  const QString VERSION = "0.30.1";
+  const QString VERSION = "0.30.2";
 	const QString ABOUT_NAME_AND_VERSION =
 		"<h1>Cashflow v" + VERSION + "</h1>";
   const QString ABOUT_COPYRIGHT_TEXT =

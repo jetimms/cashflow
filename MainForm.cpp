@@ -1461,8 +1461,7 @@ void MainForm::manageItems() {
     &form, SIGNAL(mappingChanged())
     , this, SLOT(setMappingChanged()));
 
-//  form.exec();
-  form.show();
+  form.exec();
 
   disconnect(
     &form, SIGNAL(mappingChanged())
