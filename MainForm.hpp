@@ -19,6 +19,7 @@
 	#define	_MAINFORM_HPP_
 
 	#include <QMainWindow>
+	#include <QMessageBox>
 	#include <QSqlRelationalTableModel>
 	#include <QTableView>
 
@@ -31,7 +32,6 @@
 	class	QHBoxLayout;
 	class	QLabel;
 	class	QMenu;
-	class	QMessageBox;
 	class	QModelIndex;
 	class	QPushButton;
 	class	QShortcut;
@@ -303,7 +303,8 @@
 
       QComboBox *recentFilesComboBox;
       
-      quint32 unregisterChangedChoice;
+      QMessageBox::StandardButtons unregisterChangedChoices;
+      enum QMessageBox::StandardButton unregisterChangedChoice;
   	};
   }
 #endif //	_MAINFORM_HPP_

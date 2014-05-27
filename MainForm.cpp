@@ -45,39 +45,40 @@ static const QString modifiedFileIndicator = "[*]";
 static const QString titleFileSeperator = " - ";
 
 MainForm::MainForm()
-    : periodModel((SqlTableModel *)0)
-    , flowModel((SqlTableModel *)0)
-    , categoryModel((SqlTableModel *)0)
-    , registerModel((SqlTableModel *)0)
-    , unusedModel((SqlTableModel *)0)
-    , periodView((TableView *)0)
-    , flowView((TableView *)0)
-    , categoryView((TableView *)0)
-    , registerView((TableView *)0)
-    , unusedView((TableView *)0)
-    , registerLabel((QLabel *)0)
-    , unusedLabel((QLabel *)0)
-    , periodPanel((QWidget *)0)
-    , flowPanel((QWidget *)0)
-    , categoryPanel((QWidget *)0)
-    , registerPanel((QWidget *)0)
-    , unusedPanel((QWidget *)0)
-    , periodDockWidget((QDockWidget *)0)
-    , flowDockWidget((QDockWidget *)0)
-    , categoryDockWidget((QDockWidget *)0)
-    , splitter((QSplitter *)0)
-    , mainGroupBox((QGroupBox *)0)
-    , fileMenu((QMenu *)0)
-    , editMenu((QMenu *)0)
-    , viewMenu((QMenu *)0)
-    , helpMenu((QMenu *)0)
-    , emptyGroupBox((QGroupBox *)0)
-    , newButton((QPushButton *)0)
-    , openButton((QPushButton *)0)
-    , exitButton((QPushButton *)0)
-    , emptyButtonBox((QDialogButtonBox *)0)
-    , mappingChangedFlag(false) {
-
+  : periodModel((SqlTableModel *)0)
+  , flowModel((SqlTableModel *)0)
+  , categoryModel((SqlTableModel *)0)
+  , registerModel((SqlTableModel *)0)
+  , unusedModel((SqlTableModel *)0)
+  , periodView((TableView *)0)
+  , flowView((TableView *)0)
+  , categoryView((TableView *)0)
+  , registerView((TableView *)0)
+  , unusedView((TableView *)0)
+  , registerLabel((QLabel *)0)
+  , unusedLabel((QLabel *)0)
+  , periodPanel((QWidget *)0)
+  , flowPanel((QWidget *)0)
+  , categoryPanel((QWidget *)0)
+  , registerPanel((QWidget *)0)
+  , unusedPanel((QWidget *)0)
+  , periodDockWidget((QDockWidget *)0)
+  , flowDockWidget((QDockWidget *)0)
+  , categoryDockWidget((QDockWidget *)0)
+  , splitter((QSplitter *)0)
+  , mainGroupBox((QGroupBox *)0)
+  , fileMenu((QMenu *)0)
+  , editMenu((QMenu *)0)
+  , viewMenu((QMenu *)0)
+  , helpMenu((QMenu *)0)
+  , emptyGroupBox((QGroupBox *)0)
+  , newButton((QPushButton *)0)
+  , openButton((QPushButton *)0)
+  , exitButton((QPushButton *)0)
+  , emptyButtonBox((QDialogButtonBox *)0)
+  , mappingChangedFlag(false)
+  , unregisterChangedChoices(QMessageBox::Yes | QMessageBox::No)
+{
   createActions();
   setupEmpty();
 
@@ -1372,14 +1373,13 @@ void MainForm::unregisterItem(int itemRow) {
             , tr("Unregister %1 for Period %2? It contains changed values.")
               .arg(itemName)
               .arg(periodName)
-            , QMessageBox::Yes 
-              | QMessageBox::No 
-              | QMessageBox::YesToAll
-              | QMessageBox::NoToAll);
+            , unregisterChangedChoices
+          );
       }
           
       if (unregisterChangedChoice == QMessageBox::No
-        || unregisterChangedChoice == QMessageBox::NoToAll)
+        || unregisterChangedChoice == QMessageBox::NoToAll
+        || unregisterChangedChoice == QMessageBox::Cancel)
       {
         isRunningOkay = false;
       }
@@ -1391,7 +1391,6 @@ void MainForm::unregisterItem(int itemRow) {
       }
     }
   }
-
 
   if (isRunningOkay
       && !registerModel->removeRow(row)) {
@@ -2314,23 +2313,33 @@ void MainForm::unregisterAllRegisteredItems() {
   
       progress.setWindowModality(Qt::WindowModal);
 
+      unregisterChangedChoices = 
+        QMessageBox::Yes 
+        | QMessageBox::No 
+        | QMessageBox::YesToAll
+        | QMessageBox::NoToAll
+        | QMessageBox::Cancel;
+
       unregisterChangedChoice = QMessageBox::NoButton;
 
-      for (
-        int itemIndex = 0;
-        itemIndex < totalRegisteredItems;
-        ++itemIndex)
+      int itemIndex = 0;
+      
+      while(
+        itemIndex < totalRegisteredItems
+        && !progress.wasCanceled()
+        && unregisterChangedChoice != QMessageBox::Cancel)
       {
         progress.setValue(itemIndex + 1);
   
-        if (progress.wasCanceled())
-          break;
-  
         unregisterItem(
           itemIndex - totalRegisteredItems + registerModel->rowCount());
+
+        ++itemIndex;
       }
 
+      unregisterChangedChoices = QMessageBox::Yes | QMessageBox::No;
       unregisterChangedChoice = QMessageBox::NoButton;
+
 
       progress.setValue(totalRegisteredItems);
 

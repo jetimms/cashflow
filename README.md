@@ -2,7 +2,7 @@ cashflow
 ========
 Zero-sum budgeting tool for the desktop
 
-Version 0.30.0
+Version 0.30.1
 
 Quick how-to
 ------------
@@ -232,8 +232,13 @@ Move to Qt 5
 
 What's done
 -----------
+[Done in v0.30.1 on 20140526]
+I added 'Cancel' as an optional button to to "Unregister All" action. It will stop the process, but not back out any unregistered items made already by the process.
+
 [Done in v0.30.0 on 20140526]
-Added a 'Yes To All' and 'No To All'
+Added a 'Yes To All' and 'No To All' to "Unregister All" action.
+
+Cleaned up section on adding a period.
 
 [Done in v0.29.0 on 20140414]
 Stopped allowing negative budget and actual values and set budget values to be at least as high as the actual values for the same item.
